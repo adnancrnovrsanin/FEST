@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Persistance;
 
 namespace API.Extensions
 {
@@ -9,6 +11,10 @@ namespace API.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"});
+            });
+
+            services.AddDbContext<DataContext>(opt => {
+                opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
 
             services.AddCors(opt => {
