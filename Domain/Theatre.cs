@@ -12,5 +12,7 @@ namespace Domain
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public int YearOfCreation { get; set; }
+
+        public ICollection<Festival> Festivals { get; set; }
     }
 }
