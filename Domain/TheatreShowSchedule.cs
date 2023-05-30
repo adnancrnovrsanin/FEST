@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class TheaterShowSchedule
+    public class TheatreShowSchedule
     {
         public Theatre Theatre { get; set; }
         public Show Show { get; set; }

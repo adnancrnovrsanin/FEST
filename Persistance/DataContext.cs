@@ -28,22 +28,78 @@ namespace Persistance
         public DbSet<AuditionReview> AuditionReviews { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<ShowApplicationReview> ShowApplicationReviews { get; set; }
-        public DbSet<TheaterShowSchedule> TheaterShowSchedules { get; set; }
+        public DbSet<TheatreShowSchedule> TheaterShowSchedules { get; set; }
         public DbSet<TheatreShows> TheatreShows { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            // builder.Entity<ActorAudition>(a => {
-            //     a.HasKey(aa => new {aa.ActorId, aa.AuditionId});
-            //     a.HasOne(aa => aa.Actor)
-            //         .WithMany(a => a.ActorAuditions)
-            //         .HasForeignKey(aa => aa.ActorId);
-            //     a.HasOne(aa => aa.Audition)
-            //         .WithMany(a => a.ActorAuditions)
-            //         .HasForeignKey(aa => aa.AuditionId);
-            // });
+            builder.Entity<ActorAudition>(a => {
+                a.HasKey(aa => new {aa.ActorId, aa.AuditionId});
+                a.HasOne(aa => aa.Actor)
+                    .WithMany(a => a.Auditions)
+                    .HasForeignKey(aa => aa.ActorId);
+                a.HasOne(aa => aa.Audition)
+                    .WithMany(a => a.Auditioners)
+                    .HasForeignKey(aa => aa.AuditionId);
+            });
+
+            builder.Entity<ActorShowRole>(a => {
+                a.HasKey(asr => new {asr.ActorId, asr.RoleId, asr.ShowId});
+                a.HasOne(asr => asr.Actor)
+                    .WithMany(a => a.ActingRoles)
+                    .HasForeignKey(asr => asr.ActorId);
+                a.HasOne(asr => asr.Role)
+                    .WithMany(sr => sr.RoleActors)
+                    .HasForeignKey(asr => asr.RoleId);
+                a.HasOne(asr => asr.Show)
+                    .WithMany(s => s.Actors)
+                    .HasForeignKey(asr => asr.ShowId);
+            });
+
+            builder.Entity<TheatreShows>(ts => {
+                ts.HasKey(t => new {t.TheatreId, t.ShowId});
+                ts.HasOne(t => t.Theatre)
+                    .WithMany(t => t.Shows)
+                    .HasForeignKey(t => t.TheatreId);
+                ts.HasOne(t => t.Show)
+                    .WithMany(s => s.Theatres)
+                    .HasForeignKey(t => t.ShowId);
+            });
+
+            builder.Entity<TheatreShowSchedule>(tss => {
+                tss.HasKey(t => new {t.TheatreId, t.ShowId, t.ScheduleId});
+                tss.HasOne(t => t.Theatre)
+                    .WithMany(t => t.ShowSchedules)
+                    .HasForeignKey(t => t.TheatreId);
+                tss.HasOne(t => t.Show)
+                    .WithMany(s => s.TheatreSchedules)
+                    .HasForeignKey(t => t.ShowId);
+                tss.HasOne(t => t.Schedule)
+                    .WithMany(s => s.TheatreShows)
+                    .HasForeignKey(t => t.ScheduleId);
+            });
+
+            builder.Entity<ShowApplicationReview>(sar => {
+                sar.HasKey(s => new {s.ShowId, s.ReviewerId});
+                sar.HasOne(s => s.Show)
+                    .WithMany(s => s.ApplicationReviews)
+                    .HasForeignKey(s => s.ShowId);
+                sar.HasOne(s => s.Reviewer)
+                    .WithMany(s => s.ShowApplications)
+                    .HasForeignKey(s => s.ReviewerId);
+            });
+
+            builder.Entity<AuditionReview>(ar => {
+                ar.HasKey(a => new {a.AuditionId, a.ReviewerId});
+                ar.HasOne(a => a.Audition)
+                    .WithMany(a => a.Reviews)
+                    .HasForeignKey(a => a.AuditionId);
+                ar.HasOne(a => a.Reviewer)
+                    .WithMany(a => a.AuditionReviews)
+                    .HasForeignKey(a => a.ReviewerId);
+            });
 
             builder.Entity<Festival>()
                 .HasOne(f => f.Organizer)

@@ -14,5 +14,7 @@ namespace Domain
         public int YearOfCreation { get; set; }
 
         public ICollection<Festival> Festivals { get; set; }
+        public ICollection<TheatreShows> Shows { get; set; }
+        public ICollection<TheatreShowSchedule> ShowSchedules { get; set; }
     }
 }
