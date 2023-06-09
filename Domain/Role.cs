@@ -4,7 +4,7 @@ namespace Domain
     {
         ADMIN,
         FESTIVAL_MANAGER,
-        THEATER_MANAGER,
+        THEATRE_MANAGER,
         ACTOR,
         REVIEWER,
     }
