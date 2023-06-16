@@ -32,6 +32,8 @@ namespace Application.Festivals
             {
                 var festivals = await _context.Festivals.ToListAsync();
 
+                if (festivals == null) return Result<List<Festival>>.Success(new List<Festival>());
+
                 return Result<List<Festival>>.Success(festivals);
             }
         }

@@ -8,7 +8,7 @@ namespace Domain
         public string PhoneNumber { get; set; }
         public int YearOfCreation { get; set; }
 
-        public ICollection<Festival> Festivals { get; set; }
+        public ICollection<Festival> FestivalsOrganized { get; set; }
         public ICollection<TheatreShows> Shows { get; set; }
         public ICollection<TheatreShowSchedule> ShowSchedules { get; set; }
     }

@@ -99,8 +99,60 @@ namespace Persistance
 
             builder.Entity<Festival>()
                 .HasOne(f => f.Organizer)
-                .WithMany(t => t.Festivals)
+                .WithMany(t => t.FestivalsOrganized)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.Entity<Schedule>()
+                .HasOne(s => s.Festival)
+                .WithMany(f => f.ShowSchedules)
+                .HasForeignKey(s => s.FestivalId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Festival>()
+                .HasData(
+                    new List<Festival>{
+                        new Festival{
+                            Id = Guid.NewGuid(),
+                            Name = "Festival 1",
+                            StartDate = DateTime.UtcNow.AddMonths(1),
+                            EndDate = DateTime.UtcNow.AddMonths(2),
+                            ZipCode = 36300,
+                            City = "Beograd"
+                        },
+                        new Festival{
+                            Id = Guid.NewGuid(),
+                            Name = "Festival 2",
+                            StartDate = DateTime.UtcNow.AddMonths(3),
+                            EndDate = DateTime.UtcNow.AddMonths(4),
+                            ZipCode = 36300,
+                            City = "Beograd"
+                        },
+                        new Festival{
+                            Id = Guid.NewGuid(),
+                            Name = "Festival 3",
+                            StartDate = DateTime.UtcNow.AddMonths(5),
+                            EndDate = DateTime.UtcNow.AddMonths(6),
+                            ZipCode = 36300,
+                            City = "Beograd"
+                        },
+                        new Festival{
+                            Id = Guid.NewGuid(),
+                            Name = "Festival 4",
+                            StartDate = DateTime.UtcNow.AddMonths(7),
+                            EndDate = DateTime.UtcNow.AddMonths(8),
+                            ZipCode = 36300,
+                            City = "Beograd"
+                        },
+                        new Festival{
+                            Id = Guid.NewGuid(),
+                            Name = "Festival 5",
+                            StartDate = DateTime.UtcNow.AddMonths(9),
+                            EndDate = DateTime.UtcNow.AddMonths(10),
+                            ZipCode = 36300,
+                            City = "Beograd"
+                        },
+                    }
+                );
         }
     }
 }
