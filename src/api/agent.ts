@@ -51,12 +51,12 @@ const requests = {
     del: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 }
 
-const Account = {
+const AccountRequests = {
     login: (user: LoginRequestDto) => requests.post<LoginResponseDto>('/account/login', user),
     register: (user: RegisterRequestDto) => requests.post<RegisterResponseDto>('/account/register', user),
 }
 
-const Festival = {
+const FestivalRequests = {
     all: () => requests.get('/festival'),
     details: (id: string) => requests.get(`/festival/${id}`),
     create: (festival: Festival) => requests.post<Festival>('/festival', festival),
@@ -65,8 +65,8 @@ const Festival = {
 }
 
 const agent = {
-    Account,
-    Festival,
+    AccountRequests,
+    FestivalRequests,
 }
 
 export default agent;
