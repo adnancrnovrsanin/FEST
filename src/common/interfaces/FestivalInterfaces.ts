@@ -1,3 +1,5 @@
+import { Theatre } from "./TheatreInterfaces";
+
 export interface Festival {
     id: string;
     name: string;
@@ -5,4 +7,5 @@ export interface Festival {
     endDate: Date;
     zipCode: number;
     city: string;
+    organizer: Theatre;
 }
