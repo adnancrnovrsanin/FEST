@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Core;
 using AutoMapper;
 using Domain;
+using Domain.ModelDTOs;
 using FluentValidation;
 using MediatR;
 using Persistance;
@@ -15,7 +16,7 @@ namespace Application.Festivals
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Festival Festival { get; set; }
+            public FestivalDto Festival { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command> 

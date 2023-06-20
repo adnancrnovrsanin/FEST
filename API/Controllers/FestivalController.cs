@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Festivals;
 using Domain;
+using Domain.ModelDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,13 +30,13 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateFestivalAsync(Festival festival)
+        public async Task<IActionResult> CreateFestivalAsync(FestivalDto festival)
         {
             return HandleResult(await Mediator.Send(new Create.Command {Festival = festival}));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditFestivalAsync(Guid id, Festival festival)
+        public async Task<IActionResult> EditFestivalAsync([FromQuery]Guid id, [FromBody]FestivalDto festival)
         {
             festival.Id = id;
             return HandleResult(await Mediator.Send(new Edit.Command {Festival = festival}));

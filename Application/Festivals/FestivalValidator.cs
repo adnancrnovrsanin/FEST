@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
+using Domain.ModelDTOs;
 using FluentValidation;
 
 namespace Application.Festivals
 {
-    public class FestivalValidator : AbstractValidator<Festival>
+    public class FestivalValidator : AbstractValidator<FestivalDto>
     {
         public FestivalValidator()
         {
