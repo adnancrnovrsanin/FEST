@@ -9,6 +9,7 @@ export interface LoginResponseDto {
     name: string;
     surname: string;
     email: string;
+    role: Role;
     token: string;
 }
 
@@ -24,5 +25,6 @@ export interface RegisterResponseDto {
     name: string;
     surname: string;
     email: string;
+    role: Role;
     token: string;
 }

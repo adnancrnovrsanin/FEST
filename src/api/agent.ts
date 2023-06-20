@@ -4,6 +4,7 @@ import { store } from '../stores/store';
 import { toast } from 'react-toastify';
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from '../common/interfaces/AuthInterfaces';
 import { Festival } from '../common/interfaces/FestivalInterfaces';
+import { User } from '../common/interfaces/UserInterfaces';
 
 axios.defaults.baseURL = API_URL;
 
@@ -52,6 +53,7 @@ const requests = {
 }
 
 const AccountRequests = {
+    current: () => requests.get<User>('/account'),
     login: (user: LoginRequestDto) => requests.post<LoginResponseDto>('/account/login', user),
     register: (user: RegisterRequestDto) => requests.post<RegisterResponseDto>('/account/register', user),
 }
