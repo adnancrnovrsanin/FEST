@@ -51,13 +51,13 @@ function App() {
               bgcolor: "white",
               color: "black",
               "&:hover": {
-                  bgcolor: "#7C05F2",
+                  bgcolor: "black",
                   color: "white",
               },
               width: { xs: "2rem", sm: "2.5rem", md: "2.5rem", lg: "2.5rem", xl: "2.5rem" },
               height: { xs: "2rem", sm: "2.5rem", md: "2.5rem", lg: "2.5rem", xl: "2.5rem" },
               zIndex: 100,
-              border: "1px solid #7C05F2",
+              border: "1px solid black",
           }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
