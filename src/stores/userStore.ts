@@ -3,6 +3,7 @@ import { User } from "../common/interfaces/UserInterfaces";
 import agent from "../api/agent";
 import { LoginRequestDto, RegisterRequestDto } from "../common/interfaces/AuthInterfaces";
 import { store } from "./store";
+import { router } from "../router/Routes";
 
 export default class UserStore {
     user: User | null = null;
@@ -32,6 +33,8 @@ export default class UserStore {
             store.commonStore.setToken(response.token);
             runInAction(() => {
                 this.user = user;
+                this.getUser();
+                router.navigate("/");
             });
         } catch (error) {
             console.log(error);

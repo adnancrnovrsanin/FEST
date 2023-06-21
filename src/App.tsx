@@ -9,6 +9,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { IconButton } from '@mui/material';
 import { useEffect } from 'react';
 import InitialLoader from './components/InitialLoader';
+import Navbar from './components/Navbar/Navbar';
+import HomePage from './pages/HomePage';
 
 function App() {
   const { commonStore, userStore } = useStore();

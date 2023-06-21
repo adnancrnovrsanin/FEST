@@ -2,10 +2,6 @@ label {
   font-size: .7rem;
 }
 
-input.form-control, input.form-control:focus {
-  background: #F0F0FF;
-}
-
 .error {
   position: absolute;
   color: red;
@@ -14,6 +10,7 @@ input.form-control, input.form-control:focus {
 
 .App {
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0;
