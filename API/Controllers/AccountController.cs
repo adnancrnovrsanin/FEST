@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Services;
+using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using Domain.ModelDTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -21,12 +23,16 @@ namespace API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokenService;
+        private readonly IUserAccessor _userAccessor;
+        private readonly IMapper _mapper;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _userAccessor = userAccessor;
+            _mapper = mapper;
         }
 
         [HttpPost("login")]
@@ -86,6 +92,16 @@ namespace API.Controllers
             }
 
             return BadRequest("Problem registering user");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetCurrentUser() {
+            var user = await _userManager.Users
+                .FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
+
+            if (user == null) return NotFound();
+
+            return Ok(_mapper.Map<UserDto>(user));
         }
 
         private UserDto CreateUserObject(AppUser user) {

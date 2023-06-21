@@ -13,5 +13,6 @@ namespace Domain
         public ICollection<ActorShowRole> ActingRoles { get; set; }
         public ICollection<ShowApplicationReview> ShowApplications { get; set; }
         public ICollection<AuditionReview> AuditionReviews { get; set; }
+        public ICollection<Photo> Photos { get; set; }
     }
 }

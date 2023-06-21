@@ -26,6 +26,7 @@ namespace Persistance
         public DbSet<ShowApplicationReview> ShowApplicationReviews { get; set; }
         public DbSet<TheatreShowSchedule> TheaterShowSchedules { get; set; }
         public DbSet<TheatreShows> TheatreShows { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
