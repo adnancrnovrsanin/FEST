@@ -4,26 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Core;
 using AutoMapper;
-using Domain;
 using Domain.ModelDTOs;
 using FluentValidation;
 using MediatR;
 using Persistance;
 
-namespace Application.Festivals
+namespace Application.Theatres
 {
-    public class Create
+    public class Edit
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public FestivalDto Festival { get; set; }
+            public TheatreDto Theatre { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command> 
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Festival).SetValidator(new FestivalValidator());
+                RuleFor(x => x.Theatre).SetValidator(new TheatreValidator());
             }
         }
 
@@ -37,23 +36,18 @@ namespace Application.Festivals
                 _context = context;
                 _mapper = mapper;
             }
-
+            
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var festival = new Festival {
-                    Name = request.Festival.Name,
-                    StartDate = DateTime.Parse(request.Festival.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    EndDate = DateTime.Parse(request.Festival.EndDate, null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    ZipCode = request.Festival.ZipCode,
-                    City = request.Festival.City,
-                    Organizer = _mapper.Map<Theatre>(request.Festival.Organizer),
-                };
+                var theatre = await _context.Theatres.FindAsync(request.Theatre.Id);
 
-                _context.Festivals.Add(festival);
+                if (theatre == null) return null;
+
+                _mapper.Map(request.Theatre, theatre);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create festival");
+                if (!result) return Result<Unit>.Failure("Failed to update theatre");
 
                 return Result<Unit>.Success(Unit.Value);
             }

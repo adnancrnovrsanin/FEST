@@ -109,6 +109,16 @@ namespace Persistance
                 .HasForeignKey(s => s.FestivalId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Theatre>()
+                .HasOne(t => t.Manager)
+                .WithOne(a => a.ManagedTheatre)
+                .HasForeignKey<Theatre>(t => t.ManagerId);
+
+            builder.Entity<AppUser>()
+                .HasOne(a => a.ManagedTheatre)
+                .WithOne(t => t.Manager)
+                .HasForeignKey<Theatre>(t => t.ManagerId);
+
             builder.Entity<Festival>()
                 .HasData(
                     new List<Festival>{

@@ -8,6 +8,7 @@ namespace Domain
         public string Surname { get; set; }
 
         public Role Role { get; set; }
+        public Theatre ManagedTheatre { get; set; }
 
         public ICollection<ActorAudition> Auditions { get; set; }
         public ICollection<ActorShowRole> ActingRoles { get; set; }

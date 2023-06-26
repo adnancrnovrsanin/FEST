@@ -10,20 +10,20 @@ using FluentValidation;
 using MediatR;
 using Persistance;
 
-namespace Application.Festivals
+namespace Application.Theatres
 {
     public class Create
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public FestivalDto Festival { get; set; }
+            public TheatreDto Theatre { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command> 
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Festival).SetValidator(new FestivalValidator());
+                RuleFor(x => x.Theatre).SetValidator(new TheatreValidator());
             }
         }
 
@@ -40,20 +40,18 @@ namespace Application.Festivals
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var festival = new Festival {
-                    Name = request.Festival.Name,
-                    StartDate = DateTime.Parse(request.Festival.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    EndDate = DateTime.Parse(request.Festival.EndDate, null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    ZipCode = request.Festival.ZipCode,
-                    City = request.Festival.City,
-                    Organizer = _mapper.Map<Theatre>(request.Festival.Organizer),
+                var theatre = new Theatre {
+                    Name = request.Theatre.Name,
+                    Address = request.Theatre.Address,
+                    PhoneNumber = request.Theatre.PhoneNumber,
+                    YearOfCreation = request.Theatre.YearOfCreation
                 };
 
-                _context.Festivals.Add(festival);
+                _context.Theatres.Add(theatre);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create festival");
+                if (!result) return Result<Unit>.Failure("Failed to create theatre");
 
                 return Result<Unit>.Success(Unit.Value);
             }

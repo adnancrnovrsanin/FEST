@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
@@ -10,9 +11,10 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230626152459_AddedManagerToTheatre")]
+    partial class AddedManagerToTheatre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.16");
@@ -134,9 +136,6 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("VideoURL")
                         .HasColumnType("TEXT");
 
@@ -196,47 +195,47 @@ namespace Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8aff5893-c7f3-4d41-ad19-4738f4d43e29"),
+                            Id = new Guid("fbb375a6-fe93-4a29-87f6-35b7835bf87b"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 8, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9902),
+                            EndDate = new DateTime(2023, 8, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5287),
                             Name = "Festival 1",
-                            StartDate = new DateTime(2023, 7, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9897),
+                            StartDate = new DateTime(2023, 7, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5282),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("efc42c21-dc77-45d2-ac98-07b8edda427e"),
+                            Id = new Guid("60dc464e-391c-4da9-aeac-c508346817fa"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 10, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9911),
+                            EndDate = new DateTime(2023, 10, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5296),
                             Name = "Festival 2",
-                            StartDate = new DateTime(2023, 9, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9910),
+                            StartDate = new DateTime(2023, 9, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5296),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("ae836ac2-e8e3-46d5-8e16-50ee8c306b6b"),
+                            Id = new Guid("9441b443-6761-4ec1-b189-8083cb480b7b"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 12, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9918),
+                            EndDate = new DateTime(2023, 12, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5303),
                             Name = "Festival 3",
-                            StartDate = new DateTime(2023, 11, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9917),
+                            StartDate = new DateTime(2023, 11, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5303),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("d119b7c7-1d5c-4eef-9211-a86c5d6dc209"),
+                            Id = new Guid("fb3b914d-dca6-45a4-bec2-44ae22564564"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 2, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9924),
+                            EndDate = new DateTime(2024, 2, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5310),
                             Name = "Festival 4",
-                            StartDate = new DateTime(2024, 1, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9923),
+                            StartDate = new DateTime(2024, 1, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5309),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("392699b9-b418-4575-a420-366e84e6181e"),
+                            Id = new Guid("1b98ad48-89db-4cf4-98ca-d945a79e89f8"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 4, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9930),
+                            EndDate = new DateTime(2024, 4, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5316),
                             Name = "Festival 5",
-                            StartDate = new DateTime(2024, 3, 26, 18, 30, 1, 503, DateTimeKind.Utc).AddTicks(9930),
+                            StartDate = new DateTime(2024, 3, 26, 15, 24, 59, 277, DateTimeKind.Utc).AddTicks(5316),
                             ZipCode = 36300
                         });
                 });
@@ -293,17 +292,11 @@ namespace Persistance.Migrations
                     b.Property<string>("AdditionalInformation")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DirectorName")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("SerialNumber")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("StoryWriterName")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
