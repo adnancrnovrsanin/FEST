@@ -1,7 +1,13 @@
+import CurrentShows from "../components/CurrentShows/CurrentShows";
+import FeaturedShows from "../components/FeatureShows/FeatureShows";
+import HeroSection from "../components/Hero/Hero";
+
 const HomePage = () => {
     return (
         <div>
-            <h1>Home Page</h1>
+         <HeroSection/>
+        <FeaturedShows/>
+        <CurrentShows/>
         </div>
     );
 }

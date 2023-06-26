@@ -39,10 +39,6 @@ function App() {
       <ScrollRestoration />
       <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
       <Navbar />
-      <Beggin/>
-      <FeaturedShows/>
-      <CurrentShows/>
-      <Footer />
       {
         location.pathname === '/' ? (
           <HomePage />
@@ -79,6 +75,8 @@ function App() {
             }}
           />
       </IconButton>
+      <Footer/>
+
     </div>
   );
 }
