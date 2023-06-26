@@ -35,10 +35,9 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Create.Command {Festival = festival}));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditFestivalAsync([FromQuery]Guid id, [FromBody]FestivalDto festival)
+        [HttpPut]
+        public async Task<IActionResult> EditFestivalAsync(FestivalDto festival)
         {
-            festival.Id = id;
             return HandleResult(await Mediator.Send(new Edit.Command {Festival = festival}));
         }
 

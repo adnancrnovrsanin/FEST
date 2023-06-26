@@ -40,13 +40,17 @@ namespace Application.Festivals
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var theatre = await _context.Theatres.FindAsync(request.Festival.Organizer.Id);
+
+                if (theatre == null) return null;
+
                 var festival = new Festival {
                     Name = request.Festival.Name,
                     StartDate = DateTime.Parse(request.Festival.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind),
                     EndDate = DateTime.Parse(request.Festival.EndDate, null, System.Globalization.DateTimeStyles.RoundtripKind),
                     ZipCode = request.Festival.ZipCode,
                     City = request.Festival.City,
-                    Organizer = _mapper.Map<Theatre>(request.Festival.Organizer),
+                    Organizer = theatre,
                 };
 
                 _context.Festivals.Add(festival);

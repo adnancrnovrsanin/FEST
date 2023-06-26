@@ -8,6 +8,7 @@ using Domain;
 using Domain.ModelDTOs;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistance;
 
 namespace Application.Festivals
@@ -40,7 +41,7 @@ namespace Application.Festivals
             
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var festival = await _context.Festivals.FindAsync(request.Festival.Id);
+                var festival = await _context.Festivals.Include(f => f.Organizer).SingleOrDefaultAsync(x => x.Id == request.Festival.Id);
 
                 if (festival == null) return null;
 

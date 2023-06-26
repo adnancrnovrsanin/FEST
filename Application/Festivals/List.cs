@@ -32,7 +32,7 @@ namespace Application.Festivals
 
             public async Task<Result<List<FestivalDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var festivals = await _context.Festivals.ToListAsync();
+                var festivals = await _context.Festivals.Include(f => f.Organizer).ToListAsync();
 
                 if (festivals == null) return Result<List<FestivalDto>>.Success(new List<FestivalDto>());
 
