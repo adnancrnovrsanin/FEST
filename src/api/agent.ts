@@ -3,8 +3,10 @@ import { API_URL } from '../common/constants';
 import { store } from '../stores/store';
 import { toast } from 'react-toastify';
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from '../common/interfaces/AuthInterfaces';
-import { Festival } from '../common/interfaces/FestivalInterfaces';
+import { CreateFestivalDto, Festival, FestivalDto } from '../common/interfaces/FestivalInterfaces';
 import { User } from '../common/interfaces/UserInterfaces';
+import { Theatre } from '../common/interfaces/TheatreInterfaces';
+import { CreateAuditionDto } from '../common/interfaces/AuditionInterfaces';
 
 axios.defaults.baseURL = API_URL;
 
@@ -59,16 +61,30 @@ const AccountRequests = {
 }
 
 const FestivalRequests = {
-    all: () => requests.get('/festival'),
-    details: (id: string) => requests.get(`/festival/${id}`),
-    create: (festival: Festival) => requests.post<Festival>('/festival', festival),
-    update: (festival: Festival) => requests.put<Festival>(`/festival/${festival.id}`, festival),
+    all: () => requests.get<FestivalDto[]>('/festival'),
+    details: (id: string) => requests.get<FestivalDto>(`/festival/${id}`),
+    create: (festival: CreateFestivalDto) => requests.post<FestivalDto>('/festival', festival),
+    update: (festival: FestivalDto) => requests.put<FestivalDto>(`/festival`, festival),
     delete: (id: string) => requests.del<void>(`/festival/${id}`),
 }
+
+const TheatreRequests = {
+    all: () => requests.get<Theatre[]>('/theatre'),
+    details: (id: string) => requests.get<Theatre>(`/theatre/${id}`),
+    create: (theatre: Theatre) => requests.post<Theatre>('/theatre', theatre),
+    update: (theatre: Theatre) => requests.put<Theatre>(`/theatre/${theatre.id}`, theatre),
+    delete: (id: string) => requests.del<void>(`/theatre/${id}`),
+}
+
+const AuditionRequests = {
+    create: (audition: CreateAuditionDto) => requests.post<void>('/audition', audition),
+};
 
 const agent = {
     AccountRequests,
     FestivalRequests,
+    TheatreRequests,
+    AuditionRequests,
 }
 
 export default agent;
