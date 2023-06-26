@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Festival } from "../common/interfaces/FestivalInterfaces";
+import { CreateFestivalDto, Festival, FestivalDto } from "../common/interfaces/FestivalInterfaces";
 import agent from "../api/agent";
 
 export default class FestivalStore {
@@ -33,8 +33,43 @@ export default class FestivalStore {
             });
         } catch (error) {
             console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            });
         }
     } 
+
+    updateFestival = async (festival: FestivalDto) => {
+        try {
+            this.loading = true;
+            await agent.FestivalRequests.update(festival);
+            runInAction(() => {
+                this.getFestivals();
+                this.loading = false;
+            });
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            });
+        }
+    };
+
+    createFestival = async (festival: CreateFestivalDto) => {
+        try {
+            this.loading = true;
+            await agent.FestivalRequests.create(festival);
+            runInAction(() => {
+                this.getFestivals();
+                this.loading = false;
+            });
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            });
+        }
+    }
 
     deleteFestival = async (id: string) => {
         try {

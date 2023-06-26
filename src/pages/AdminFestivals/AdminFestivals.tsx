@@ -47,7 +47,7 @@ const AdminFestivals = () => {
                                         }
                                     </td>
                                     <td>
-                                        <Link className="btn btn-outline-light tableButtons" to="/">Edit</Link>
+                                        <Link className="btn btn-outline-light tableButtons" to={`/admin/festivals/${festival.id}`}>Edit</Link>
                                         <button className="btn btn-outline-light tableButtons" onClick={() => deleteFestival(festival.id)}>Delete</button>
                                     </td>
                                 </tr>

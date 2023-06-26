@@ -12,7 +12,8 @@ export const routes: RouteObject[] = [
         children: [
             {element: <RequireAdmin />, children: [
                 {path: '/admin/festivals', element: <AdminFestivals />},
-                {path: '/admin/festivals/create', element: <AdminCreateFestival />}
+                {path: '/admin/festivals/create', element: <AdminCreateFestival />},
+                {path: '/admin/festivals/:id', element: <AdminCreateFestival />}
             ]},
             {path: '/login', element: <LoginPage />},
         ]
