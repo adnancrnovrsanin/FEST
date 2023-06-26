@@ -1,7 +1,7 @@
 import { useField } from "formik";
 
 interface Props {
-    placeholder: string;
+    placeholder?: string;
     name: string;
     label?: string;
     type?: string;
@@ -17,7 +17,7 @@ const CustomTextInput = (props: Props) => {
                 {...field}
                 {...props}
                 className={`form-control shadow-none ${meta.touched && meta.error && "is-invalid"}`}
-                placeholder={props.placeholder}
+                placeholder={props?.placeholder ?? undefined}
                 autoComplete="off"
             />
             {meta.touched && meta.error ? (

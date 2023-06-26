@@ -2,15 +2,15 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
 
-function RequireAuth() {
-    const { userStore: { isLoggedIn } } = useStore();
+const RequireAdmin = () => {
+    const { userStore: { isAdmin } } = useStore();
     const location = useLocation();
 
-    if (!isLoggedIn) {
+    if (!isAdmin) {
         return <Navigate to='/' state={{from: location}} />
     }
 
-    return <Outlet />
+    return <Outlet />;
 }
 
-export default observer(RequireAuth);
+export default observer(RequireAdmin);

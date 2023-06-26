@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { User } from "../common/interfaces/UserInterfaces";
+import { Role, User } from "../common/interfaces/UserInterfaces";
 import agent from "../api/agent";
 import { LoginRequestDto, RegisterRequestDto } from "../common/interfaces/AuthInterfaces";
 import { store } from "./store";
@@ -15,6 +15,13 @@ export default class UserStore {
 
     get isLoggedIn() {
         return !!this.user;
+    }
+
+    get isAdmin() {
+        if (this.user) {
+            return this.user.role === Role.ADMIN;
+        }
+        return false;
     }
 
     login = async (email: string, password: string) => {

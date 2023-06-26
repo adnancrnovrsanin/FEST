@@ -4,10 +4,11 @@ import { useStore } from "../../stores/store";
 import { Avatar, Typography } from "@mui/material";
 import { stringToColor, stringAvatar } from "../../common/util/usefulFunctions";
 import { useLocation, useNavigate } from "react-router-dom";
+import AdminNav from "../AdminNav";
 
 const Navbar = () => {
     const { userStore } = useStore();
-    const { user, logout } = userStore;
+    const { user, logout, isAdmin } = userStore;
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -27,13 +28,11 @@ const Navbar = () => {
                                         <a className="nav-link active" aria-current="page">Active</a>
                                     </li>
 
-                                    <li className="nav-item">
-                                        <a className="nav-link">Link</a>
-                                    </li>
-
-                                    <li className="nav-item">
-                                        <a className="nav-link">Link</a>
-                                    </li>
+                                    {
+                                        user && isAdmin && (
+                                            <AdminNav />
+                                        )
+                                    }
 
                                     {
                                         user ? (
@@ -58,7 +57,7 @@ const Navbar = () => {
                                                         fontSize: "16px",
                                                     }} />
                                                 </div>
-                                                <ul className="dropdown-menu" data-bs-theme="dark">
+                                                <ul className="dropdown-menu profileMenu" data-bs-theme="dark">
                                                     <li><a className="dropdown-item" href="#">Action</a></li>
                                                     <li><a className="dropdown-item" href="#">Another action</a></li>
                                                     <li><hr className="dropdown-divider" /></li>
