@@ -19,7 +19,7 @@ namespace Persistance
         public DbSet<Show> Shows { get; set; }
         public DbSet<ShowRole> ShowRoles { get; set; }
         public DbSet<ActorShowRole> ActorShowRoles { get; set; }
-        public DbSet<ActorAudition> ActorAuditions { get; set; }
+        public DbSet<ActorShowRoleAudition> ActorShowRoleAuditions { get; set; }
         public DbSet<Audition> Auditions { get; set; }
         public DbSet<AuditionReview> AuditionReviews { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
@@ -32,14 +32,17 @@ namespace Persistance
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ActorAudition>(a => {
-                a.HasKey(aa => new {aa.ActorId, aa.AuditionId});
+            builder.Entity<ActorShowRoleAudition>(a => {
+                a.HasKey(aa => new {aa.ActorId, aa.AuditionId, aa.ShowRoleId});
                 a.HasOne(aa => aa.Actor)
                     .WithMany(a => a.Auditions)
                     .HasForeignKey(aa => aa.ActorId);
                 a.HasOne(aa => aa.Audition)
                     .WithMany(a => a.Auditioners)
                     .HasForeignKey(aa => aa.AuditionId);
+                a.HasOne(aa => aa.ShowRole)
+                    .WithMany(sr => sr.ShowRoleAuditions)
+                    .HasForeignKey(aa => aa.ShowRoleId);
             });
 
             builder.Entity<ActorShowRole>(a => {

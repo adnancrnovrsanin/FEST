@@ -16,7 +16,7 @@ namespace Application.Core
             CreateMap<AppUser, AppUser>();
             CreateMap<AppUser, UserDto>();
             CreateMap<UserDto, AppUser>();
-            CreateMap<ActorAudition, ActorAudition>();
+            CreateMap<ActorShowRoleAudition, ActorShowRoleAudition>();
             CreateMap<Audition, Audition>();
             CreateMap<Schedule, Schedule>();
             CreateMap<Show, Show>();

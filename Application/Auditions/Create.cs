@@ -15,7 +15,7 @@ namespace Application.Auditions
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public AuditionDto Audition { get; set; }
+            public ActorShowRoleAuditionDto Audition { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -31,7 +31,9 @@ namespace Application.Auditions
             {
                 var actor = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.Audition.ActorId);
 
-                if (actor == null) return null;
+                var showRole = await _context.ShowRoles.SingleOrDefaultAsync(x => x.Id == request.Audition.ShowRoleId);
+
+                if (actor == null || showRole == null) return null;
 
                 var audition = new Audition {
                     VideoURL = request.Audition.VideoURL,
@@ -40,12 +42,13 @@ namespace Application.Auditions
 
                 _context.Auditions.Add(audition);
 
-                var actorAudition = new ActorAudition {
+                var actorAudition = new ActorShowRoleAudition {
                     Actor = actor,
                     Audition = audition,
+                    ShowRole = showRole
                 };
 
-                _context.ActorAuditions.Add(actorAudition);
+                _context.ActorShowRoleAuditions.Add(actorAudition);
 
                 var result = await _context.SaveChangesAsync() > 0;
 

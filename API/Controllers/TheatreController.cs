@@ -32,10 +32,9 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Create.Command {Theatre = theatre}));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditTheatreAsync([FromQuery]Guid id, [FromBody]TheatreDto theatre)
+        [HttpPut]
+        public async Task<IActionResult> EditTheatreAsync(TheatreDto theatre)
         {
-            theatre.Id = id;
             return HandleResult(await Mediator.Send(new Edit.Command {Theatre = theatre}));
         }
 

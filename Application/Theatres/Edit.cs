@@ -7,6 +7,7 @@ using AutoMapper;
 using Domain.ModelDTOs;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistance;
 
 namespace Application.Theatres
@@ -39,7 +40,7 @@ namespace Application.Theatres
             
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var theatre = await _context.Theatres.FindAsync(request.Theatre.Id);
+                var theatre = await _context.Theatres.SingleOrDefaultAsync(x => x.Id == request.Theatre.Id);
 
                 if (theatre == null) return null;
 

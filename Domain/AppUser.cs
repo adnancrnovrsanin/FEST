@@ -10,7 +10,7 @@ namespace Domain
         public Role Role { get; set; }
         public Theatre ManagedTheatre { get; set; }
 
-        public ICollection<ActorAudition> Auditions { get; set; }
+        public ICollection<ActorShowRoleAudition> Auditions { get; set; }
         public ICollection<ActorShowRole> ActingRoles { get; set; }
         public ICollection<ShowApplicationReview> ShowApplications { get; set; }
         public ICollection<AuditionReview> AuditionReviews { get; set; }

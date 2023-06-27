@@ -19,7 +19,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAudition(AuditionDto audition)
+        public async Task<IActionResult> CreateAudition(ActorShowRoleAuditionDto audition)
         {
             return HandleResult(await Mediator.Send(new Create.Command {Audition = audition}));
         }
