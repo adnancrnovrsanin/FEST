@@ -5,3 +5,10 @@ export interface Theatre {
     phoneNumber: string;
     yearOfCreation: number;
 }
+
+export interface CreateTheatreDto {
+    name: string;
+    address: string;
+    phoneNumber: string;
+    yearOfCreation: number;
+}

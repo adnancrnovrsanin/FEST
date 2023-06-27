@@ -4,6 +4,9 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RequireAdmin from "./RequireAdmin";
 import AdminFestivals from "../pages/AdminFestivals/AdminFestivals";
 import AdminCreateFestival from "../pages/AdminCreateFestival/AdminCreateFestival";
+import Theatres from "../pages/Theatres/Theatres";
+import TheatreFormPage from "../pages/TheatreFormPage/TheatreFormPage";
+import ShowSearchPage from "../pages/ShowSearchPage/ShowSearchPage";
 
 export const routes: RouteObject[] = [
     {
@@ -13,9 +16,13 @@ export const routes: RouteObject[] = [
             {element: <RequireAdmin />, children: [
                 {path: '/admin/festivals', element: <AdminFestivals />},
                 {path: '/admin/festivals/create', element: <AdminCreateFestival />},
-                {path: '/admin/festivals/:id', element: <AdminCreateFestival />}
+                {path: '/admin/festivals/:id/edit', element: <AdminCreateFestival />},
+                {path: '/admin/theatres', element: <Theatres />},
+                {path: '/admin/theatres/create', element: <TheatreFormPage />},
+                {path: '/admin/theatres/:id/edit', element: <TheatreFormPage />},
             ]},
             {path: '/login', element: <LoginPage />},
+            {path: '/shows', element: <ShowSearchPage />},
         ]
     }
 ];

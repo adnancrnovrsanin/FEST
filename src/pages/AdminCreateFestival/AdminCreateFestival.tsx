@@ -38,8 +38,12 @@ const AdminCreateFestival = () => {
     const [selectedFestival, setSelectedFestival] = useState<Festival | null>(null);
 
     useEffect(() => {
-        getTheatres();
-        if (id) setSelectedFestival(festivals.find(f => f.id === id) ?? null);
+        (
+            async () => {
+                await getTheatres();
+                if (id) setSelectedFestival(festivals.find(f => f.id === id) ?? null);
+            }
+        )();
     }, [id]);
 
     const initialValues: Festival = {
@@ -56,7 +60,9 @@ const AdminCreateFestival = () => {
 
     return (
         <div className="festivalCreateContainer">
-            <h1>Create a new festival</h1>
+            <h1>
+                {id ? "Edit festival" : "Create a new festival"}
+            </h1>
 
             <LocalizationProvider dateAdapter={AdapterMoment}>
                 <Formik

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from '../common/interfaces/AuthInterfaces';
 import { CreateFestivalDto, Festival, FestivalDto } from '../common/interfaces/FestivalInterfaces';
 import { User } from '../common/interfaces/UserInterfaces';
-import { Theatre } from '../common/interfaces/TheatreInterfaces';
+import { CreateTheatreDto, Theatre } from '../common/interfaces/TheatreInterfaces';
 import { CreateAuditionDto } from '../common/interfaces/AuditionInterfaces';
 
 axios.defaults.baseURL = API_URL;
@@ -71,8 +71,8 @@ const FestivalRequests = {
 const TheatreRequests = {
     all: () => requests.get<Theatre[]>('/theatre'),
     details: (id: string) => requests.get<Theatre>(`/theatre/${id}`),
-    create: (theatre: Theatre) => requests.post<Theatre>('/theatre', theatre),
-    update: (theatre: Theatre) => requests.put<Theatre>(`/theatre/${theatre.id}`, theatre),
+    create: (theatre: CreateTheatreDto) => requests.post<Theatre>('/theatre', theatre),
+    update: (theatre: Theatre) => requests.put<Theatre>(`/theatre`, theatre),
     delete: (id: string) => requests.del<void>(`/theatre/${id}`),
 }
 

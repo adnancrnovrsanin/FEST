@@ -1,13 +1,4 @@
-.createFestivalForm {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 500px;
-}
-
-.festivalCreateContainer {
+.theatreFormPageContainer {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -18,3 +9,11 @@
     margin-bottom: 50px;
 }
 
+.theatreForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 500px;
+}

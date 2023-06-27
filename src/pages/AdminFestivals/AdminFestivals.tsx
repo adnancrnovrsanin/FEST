@@ -16,7 +16,7 @@ const AdminFestivals = () => {
     if (loading) return <InitialLoader adding="festivals"/>
 
     return (
-        <div>
+        <div style={{ minHeight: "100vh" }}>
             <table className="table table-dark table-striped">
                 <thead>
                     <tr>
@@ -47,7 +47,7 @@ const AdminFestivals = () => {
                                         }
                                     </td>
                                     <td>
-                                        <Link className="btn btn-outline-light tableButtons" to={`/admin/festivals/${festival.id}`}>Edit</Link>
+                                        <Link className="btn btn-outline-light tableButtons" to={`/admin/festivals/${festival.id}/edit`}>Edit</Link>
                                         <button className="btn btn-outline-light tableButtons" onClick={() => deleteFestival(festival.id)}>Delete</button>
                                     </td>
                                 </tr>

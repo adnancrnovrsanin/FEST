@@ -35,39 +35,41 @@ const Navbar = () => {
                                     }
 
                                     {
-                                        user ? (
-                                            <div className="nav-link dropdown-center">
-                                                <div className="navProfile dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <Typography
-                                                        style={{
-                                                            marginRight: "10px",
-                                                            fontSize: "15px",
-                                                            fontWeight: "500",
-                                                            fontFamily: "Poppins, sans-serif",
-                                                            color: "#fff",
-                                                        }}
-                                                    >
-                                                        {user.name + " " + user.surname}
-                                                    </Typography>
-                                                    
-                                                    <Avatar variant="circular" alt="Profile photo" {...stringAvatar(user.name + ' ' + user.surname)} sx={{
-                                                        bgcolor: stringToColor(user.email),
-                                                        width: "35px",
-                                                        height: "35px",
-                                                        fontSize: "16px",
-                                                    }} />
+                                        !isAdmin && (
+                                            user ? (
+                                                <div className="nav-link dropdown-center">
+                                                    <div className="navProfile dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <Typography
+                                                            style={{
+                                                                marginRight: "10px",
+                                                                fontSize: "15px",
+                                                                fontWeight: "500",
+                                                                fontFamily: "Poppins, sans-serif",
+                                                                color: "#fff",
+                                                            }}
+                                                        >
+                                                            {user.name + " " + user.surname}
+                                                        </Typography>
+                                                        
+                                                        <Avatar variant="circular" alt="Profile photo" {...stringAvatar(user.name + ' ' + user.surname)} sx={{
+                                                            bgcolor: stringToColor(user.email),
+                                                            width: "35px",
+                                                            height: "35px",
+                                                            fontSize: "16px",
+                                                        }} />
+                                                    </div>
+                                                    <ul className="dropdown-menu profileMenu" data-bs-theme="dark">
+                                                        <li><a className="dropdown-item" href="#">Action</a></li>
+                                                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                                                        <li><hr className="dropdown-divider" /></li>
+                                                        <li><a className="dropdown-item" onClick={() => logout()}>Logout</a></li>
+                                                    </ul>
                                                 </div>
-                                                <ul className="dropdown-menu profileMenu" data-bs-theme="dark">
-                                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                                                    <li><hr className="dropdown-divider" /></li>
-                                                    <li><a className="dropdown-item" onClick={() => logout()}>Logout</a></li>
-                                                </ul>
-                                            </div>
-                                        ) : (
-                                            <li className="nav-item">
-                                                <button className="btn btn-outline-light" onClick={() => navigate('/login')}>Login</button>
-                                            </li>
+                                            ) : (
+                                                <li className="nav-item">
+                                                    <button className="btn btn-outline-light" onClick={() => navigate('/login')}>Login</button>
+                                                </li>
+                                            )
                                         )
                                     }
                                 </ul>
