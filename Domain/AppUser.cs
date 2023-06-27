@@ -12,7 +12,7 @@ namespace Domain
 
         public ICollection<ActorShowRoleAudition> Auditions { get; set; }
         public ICollection<ActorShowRole> ActingRoles { get; set; }
-        public ICollection<ShowApplicationReview> ShowApplications { get; set; }
+        public ICollection<ShowFestivalApplicationReview> ShowApplications { get; set; }
         public ICollection<AuditionReview> AuditionReviews { get; set; }
         public ICollection<Photo> Photos { get; set; }
     }

@@ -11,6 +11,6 @@ namespace Domain
         public ICollection<ActorShowRole> Actors { get; set; }
         public ICollection<TheatreShows> Theatres { get; set; }
         public ICollection<TheatreShowSchedule> TheatreSchedules { get; set; }
-        public ICollection<ShowApplicationReview> ApplicationReviews { get; set; }
+        public ICollection<ShowFestivalApplicationReview> ApplicationReviews { get; set; }
     }
 }

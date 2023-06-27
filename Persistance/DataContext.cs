@@ -23,7 +23,7 @@ namespace Persistance
         public DbSet<Audition> Auditions { get; set; }
         public DbSet<AuditionReview> AuditionReviews { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<ShowApplicationReview> ShowApplicationReviews { get; set; }
+        public DbSet<ShowFestivalApplicationReview> ShowFestivalApplicationReviews { get; set; }
         public DbSet<TheatreShowSchedule> TheaterShowSchedules { get; set; }
         public DbSet<TheatreShows> TheatreShows { get; set; }
         public DbSet<Photo> Photos { get; set; }
@@ -81,7 +81,7 @@ namespace Persistance
                     .HasForeignKey(t => t.ScheduleId);
             });
 
-            builder.Entity<ShowApplicationReview>(sar => {
+            builder.Entity<ShowFestivalApplicationReview>(sar => {
                 sar.HasKey(s => new {s.ShowId, s.ReviewerId});
                 sar.HasOne(s => s.Show)
                     .WithMany(s => s.ApplicationReviews)
@@ -89,6 +89,9 @@ namespace Persistance
                 sar.HasOne(s => s.Reviewer)
                     .WithMany(s => s.ShowApplications)
                     .HasForeignKey(s => s.ReviewerId);
+                sar.HasOne(s => s.Festival)
+                    .WithMany(s => s.ShowApplications)
+                    .HasForeignKey(s => s.FestivalId);
             });
 
             builder.Entity<AuditionReview>(ar => {
