@@ -17,6 +17,19 @@ namespace Application.Core
             CreateMap<AppUser, UserDto>();
             CreateMap<UserDto, AppUser>();
             CreateMap<ActorShowRoleAudition, ActorShowRoleAudition>();
+            CreateMap<ActorShowRoleAudition, ActorShowRoleAuditionDto>()
+                .ForMember(d => d.AuditionId, o => o.MapFrom(s => s.Audition.Id))
+                .ForMember(d => d.ActorId, o => o.MapFrom(s => s.Actor.Id))
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.Actor.Name))
+                .ForMember(d => d.Surname, o => o.MapFrom(s => s.Actor.Surname))
+                .ForMember(d => d.Email, o => o.MapFrom(s => s.Actor.Email))
+                .ForMember(d => d.VideoURL, o => o.MapFrom(s => s.Audition.VideoURL))
+                .ForMember(d => d.Description, o => o.MapFrom(s => s.Audition.Description))
+                .ForMember(d => d.ShowRoleId, o => o.MapFrom(s => s.ShowRole.Id))
+                .ForMember(d => d.RoleName, o => o.MapFrom(s => s.ShowRole.Name))
+                .ForMember(d => d.ShowId, o => o.MapFrom(s => s.ShowRole.Show.Id))
+                .ForMember(d => d.ShowName, o => o.MapFrom(s => s.ShowRole.Show.Name))
+                .ForMember(d => d.AverageReview, o => o.MapFrom(s => s.Audition.Reviews.Count == 0 ? 0 : s.Audition.Reviews.Average(r => r.Review)));
             CreateMap<Audition, Audition>();
             CreateMap<Schedule, Schedule>();
             CreateMap<Show, Show>();

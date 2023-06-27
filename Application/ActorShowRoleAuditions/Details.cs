@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Core;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain.ModelDTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,14 @@ namespace Application.Auditions
 
             public async Task<Result<AuditionDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var audition = await _context.Auditions.FirstOrDefaultAsync(x => x.Id == request.Id);
+                var audition = await _context.ActorShowRoleAuditions
+                    .Include(a => a.Actor)
+                    .Include(a => a.Audition)
+                    .ThenInclude(a => a.Reviews)
+                    .Include(a => a.ShowRole)
+                    .ThenInclude(a => a.Show)
+                    .ProjectTo<ActorShowRoleAuditionDto>(_mapper.ConfigurationProvider)
+                    .SingleOrDefaultAsync(a => a.AuditionId == request.Id);
 
                 if (audition == null) return null;
 
