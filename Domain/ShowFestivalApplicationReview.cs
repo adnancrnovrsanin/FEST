@@ -9,5 +9,6 @@ namespace Domain
         public Guid FestivalId { get; set; }
         public Festival Festival { get; set; }    
         public bool Acceptable { get; set; }
+        public bool Reviewed { get; set; }
     }
 }

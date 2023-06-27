@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Domain.ModelDTOs
 {
-    public class ShowApplicationReviewDto
+    public class ShowFestivalApplicationReviewDto
     {
         public string ReviewerId { get; set; }
         public string Name { get; set; }
