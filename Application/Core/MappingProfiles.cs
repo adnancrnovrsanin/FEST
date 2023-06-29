@@ -42,6 +42,8 @@ namespace Application.Core
             CreateMap<FestivalDto, Festival>()
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => DateTime.Parse(s.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind)))
                 .ForMember(d => d.EndDate, o => o.MapFrom(s => DateTime.Parse(s.EndDate, null, System.Globalization.DateTimeStyles.RoundtripKind)));
+            CreateMap<AppUser, ActorProfileDto>();
+            CreateMap<AppUser, ReviewerProfileDto>();
 
         }
     }
