@@ -1,5 +1,9 @@
 ﻿using Application.Core;
+using AutoMapper;
+using Domain.ModelDTOs;
+using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistance;
 using System;
 using System.Collections.Generic;
@@ -9,33 +13,30 @@ using System.Threading.Tasks;
 
 namespace Application.Profiles
 {
-    public class Delete
+    public class EditReviewer
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Guid Id { get; set; }
+            public ReviewerProfileDto Reviewer { get; set; }
         }
+
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-
-            public Handler(DataContext context)
+            private readonly IMapper _mapper;
+            public Handler(DataContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var profile = await _context.Users.FindAsync(request.Id);
-
+                var profile = await _context.Users.Include(p => p.UserName).SingleOrDefaultAsync(x => x.Surname == request.Reviewer.Surname);
                 if (profile == null) return null;
-
-                _context.Remove(profile);
-
+                _mapper.Map(request.Reviewer, profile);
                 var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to delete user");
-
+                if (!result) return Result<Unit>.Failure("Failed to update profile");
                 return Result<Unit>.Success(Unit.Value);
             }
         }
