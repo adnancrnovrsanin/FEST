@@ -13,7 +13,7 @@ const Navbar = () => {
     const location = useLocation();
 
     return (
-        <nav className="navbar navbar-expand-lg bg-dark border-bottom border-bottom-dark">
+        <nav className="navbar navbar-expand-lg bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
             <div className="container">
                 <a className="navbar-brand" onClick={() => navigate('/')} >FEST</a>
                 {
