@@ -42,8 +42,13 @@ namespace Application.Core
             CreateMap<FestivalDto, Festival>()
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => DateTime.Parse(s.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind)))
                 .ForMember(d => d.EndDate, o => o.MapFrom(s => DateTime.Parse(s.EndDate, null, System.Globalization.DateTimeStyles.RoundtripKind)));
-            CreateMap<AppUser, ActorProfileDto>();
-            CreateMap<AppUser, ReviewerProfileDto>();
+            CreateMap<AppUser, ActorProfileDto>()
+                .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)))
+                .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos.Where(p => !p.IsMain)))
+                .ForMember(d => d.AuditionsReviewed, o => o.MapFrom(s => s.Auditions.Where(a => a.Audition.Reviews.Count > 2)))
+                .ForMember(d => d.AuditionsNotReviewed, o => o.MapFrom(s => s.Auditions.Where(a => a.Audition.Reviews.Count < 3)));
+            CreateMap<AppUser, ReviewerProfileDto>()
+                .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
 
         }
     }

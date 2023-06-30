@@ -15,6 +15,5 @@ namespace Domain.ModelDTOs
         public ICollection<ShowFestivalApplicationReview> ShowApplications { get; set; }
         public ICollection<AuditionReview> AuditionReviews { get; set; }
         public Photo ProfilePicture { get; set; }
-
     }
 }
