@@ -7,6 +7,7 @@ import AdminCreateFestival from "../pages/AdminCreateFestival/AdminCreateFestiva
 import Theatres from "../pages/Theatres/Theatres";
 import TheatreFormPage from "../pages/TheatreFormPage/TheatreFormPage";
 import ShowSearchPage from "../pages/ShowSearchPage/ShowSearchPage";
+import FestivalPage from "../pages/FestivalPage/FestivalPage";
 
 export const routes: RouteObject[] = [
     {
@@ -21,6 +22,7 @@ export const routes: RouteObject[] = [
                 {path: '/admin/theatres/create', element: <TheatreFormPage />},
                 {path: '/admin/theatres/:id/edit', element: <TheatreFormPage />},
             ]},
+            {path: '/festivals/:id', element: <FestivalPage />},
             {path: '/login', element: <LoginPage />},
             {path: '/shows', element: <ShowSearchPage />},
         ]

@@ -1,0 +1,14 @@
+.festivalPageContainer {
+    min-height: 100vh;
+    display: flex;
+}
+
+.festivalDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.organizerDetails {
+    display: flex;
+    flex-direction: column;
+}
