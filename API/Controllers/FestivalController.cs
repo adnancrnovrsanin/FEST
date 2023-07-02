@@ -46,5 +46,11 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Delete.Command {Id = id}));
         }
+
+        [HttpPost("apply")]
+        public async Task<IActionResult> ApplyForFestivalAsync(ShowFestivalApplicationDto festivalApplication)
+        {
+            return HandleResult(await Mediator.Send(new Apply.Command {FestivalApplication = festivalApplication}));
+        }
     }
 }

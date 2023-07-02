@@ -10,16 +10,16 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProfileContoller : BaseApiController
     {
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<ActorProfileDto>>> GetActorAsync(Guid id)
-        {
-            return HandleResult(await Mediator.Send(new ActorDetails.Query { Id = id }));
-        }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<ReviewerProfileDto>>> GetReviewerAsync(Guid id)
-        {
-            return HandleResult(await Mediator.Send(new ReviewerDetails.Query { Id = id }));
-        }
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<List<ActorProfileDto>>> GetActorAsync(Guid id)
+        // {
+        //     return HandleResult(await Mediator.Send(new ActorDetails.Query { Id = id }));
+        // }
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<List<ReviewerProfileDto>>> GetReviewerAsync(Guid id)
+        // {
+        //     return HandleResult(await Mediator.Send(new ReviewerDetails.Query { Id = id }));
+        // }
         [HttpPut]
         public async Task<IActionResult> EditActorAsync(ActorProfileDto actor)
         {
