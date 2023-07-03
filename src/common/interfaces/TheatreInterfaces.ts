@@ -4,6 +4,7 @@ export interface Theatre {
     address: string;
     phoneNumber: string;
     yearOfCreation: number;
+    managerEmail: string;
 }
 
 export interface CreateTheatreDto {
@@ -11,4 +12,14 @@ export interface CreateTheatreDto {
     address: string;
     phoneNumber: string;
     yearOfCreation: number;
+    managerEmail: string | null;
+}
+
+export interface EditTheatreDto {
+    id: string;
+    name: string;
+    address: string;
+    phoneNumber: string;
+    yearOfCreation: number;
+    managerEmail: string;
 }

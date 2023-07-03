@@ -6,7 +6,7 @@ import InitialLoader from "../../components/InitialLoader";
 import './style.css';
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
-import { CreateTheatreDto, Theatre } from "../../common/interfaces/TheatreInterfaces";
+import { CreateTheatreDto, EditTheatreDto, Theatre } from "../../common/interfaces/TheatreInterfaces";
 import CustomTextInput from "../../common/form/CustomTextInput/CustomTextInput";
 
 const validate = Yup.object({
@@ -31,12 +31,13 @@ const TheatreFormPage = () => {
         if (id) setSelectedTheatre(theatres.find(t => t.id === id) ?? null);
     }, [id]);
 
-    const initialValues: Theatre = {
+    const initialValues: EditTheatreDto = {
         id: selectedTheatre === null ? "" : selectedTheatre.id,
         name: selectedTheatre === null ? "" : selectedTheatre.name,
         address: selectedTheatre === null ? "" : selectedTheatre.address,
         phoneNumber: selectedTheatre === null ? "" : selectedTheatre.phoneNumber,
         yearOfCreation: selectedTheatre === null ? 0 : selectedTheatre.yearOfCreation,
+        managerEmail: selectedTheatre === null ? "" : selectedTheatre.managerEmail
     }
 
     if (loading) return <InitialLoader adding="" />
@@ -61,7 +62,8 @@ const TheatreFormPage = () => {
                             name: values.name,
                             address: values.address,
                             phoneNumber: values.phoneNumber,
-                            yearOfCreation: values.yearOfCreation
+                            yearOfCreation: values.yearOfCreation,
+                            managerEmail: values.managerEmail
                         };
 
                         createTheatre(newTheatre).then(() => navigate("/admin/theatres"));
@@ -74,6 +76,7 @@ const TheatreFormPage = () => {
                         <CustomTextInput label="Address" name="address" placeholder="Enter address" />
                         <CustomTextInput label="Phone number" name="phoneNumber" placeholder="Enter phone number" />
                         <CustomTextInput label="Year of creation" name="yearOfCreation" placeholder="Enter year of creation" type="number" />
+                        <CustomTextInput label="Theatre manager's email:" name="managerEmail" placeholder="Enter manager's email" />
 
                         <button className="btn btn-dark mt-3" type="submit" disabled={isSubmitting || !dirty}>
                             {
