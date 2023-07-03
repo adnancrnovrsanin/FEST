@@ -47,6 +47,15 @@ namespace Application.Festivals
 
                 _mapper.Map(request.Festival, festival);
 
+                if (request.Festival.Organizer != null)
+                {
+                    var organizer = await _context.Theatres.SingleOrDefaultAsync(x => x.Id == request.Festival.Organizer.Id);
+
+                    if (organizer == null) return null;
+
+                    festival.Organizer = organizer;
+                }
+
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (!result) return Result<Unit>.Failure("Failed to update festival");

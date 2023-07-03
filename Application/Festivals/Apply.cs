@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Core;
+using Application.Interfaces;
 using Domain;
 using Domain.ModelDTOs;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistance;
 
 namespace Application.Festivals
@@ -20,15 +22,23 @@ namespace Application.Festivals
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
                 _context = context;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var theatre = await _context.Theatres.FindAsync(request.FestivalApplication.TheatreId);
+                var manager = await _context.Users.Include(u => u.ManagedTheatre).SingleOrDefaultAsync(u => u.Email == _userAccessor.GetEmail());
+
+                if (manager == null) return null;
+
+                if (manager.Role != Role.THEATRE_MANAGER || manager.ManagedTheatre == null) return Result<Unit>.Failure("Only theatre manager can register for festival");
+
+                var theatre = await _context.Theatres.SingleOrDefaultAsync(t => t.Id == manager.ManagedTheatre.Id);
 
                 if (theatre == null) return null;
 
@@ -41,6 +51,7 @@ namespace Application.Festivals
                     Name = request.FestivalApplication.Name,
                     DirectorName = request.FestivalApplication.DirectorName,
                     StoryWriterName = request.FestivalApplication.StoryWriterName,
+                    LengthOfPlay = request.FestivalApplication.LengthOfPlay,
                     AdditionalInformation = request.FestivalApplication.AdditionalInformation,
                 };
 
@@ -52,7 +63,6 @@ namespace Application.Festivals
                 };
 
                 show.Applications.Add(showFestivalApplication);
-
                 _context.Shows.Add(show);
                 _context.ShowFestivalApplications.Add(showFestivalApplication);
 

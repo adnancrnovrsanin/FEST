@@ -13,6 +13,7 @@ namespace Domain.ModelDTOs
         public string Name { get; set; }
         public string DirectorName { get; set; }
         public string StoryWriterName { get; set; }
+        public int LengthOfPlay { get; set; }
         public string AdditionalInformation { get; set; }
         public int NumberOfActors { get; set; }
     }

@@ -60,9 +60,6 @@ namespace API.Controllers
                 case "ADMIN":
                     role = Role.ADMIN;
                     break;
-                case "FESTIVAL_MANAGER":
-                    role = Role.FESTIVAL_MANAGER;
-                    break;
                 case "THEATRE_MANAGER":
                     role = Role.THEATRE_MANAGER;
                     break;
@@ -106,9 +103,11 @@ namespace API.Controllers
 
         private UserDto CreateUserObject(AppUser user) {
             return new UserDto {
+                Id = user.Id,
                 Name = user.Name,
                 Surname = user.Surname,
                 Email = user.Email,
+                Role = user.Role.ToString(),
                 Token = _tokenService.CreateToken(user)
             };
         }
