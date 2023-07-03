@@ -3,10 +3,11 @@ import { API_URL } from '../common/constants';
 import { store } from '../stores/store';
 import { toast } from 'react-toastify';
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from '../common/interfaces/AuthInterfaces';
-import { CreateFestivalDto, Festival, FestivalDto, ShowFestivalApplicationDto } from '../common/interfaces/FestivalInterfaces';
+import { CreateFestivalDto, Festival, FestivalDto } from '../common/interfaces/FestivalInterfaces';
 import { User } from '../common/interfaces/UserInterfaces';
 import { CreateTheatreDto, Theatre } from '../common/interfaces/TheatreInterfaces';
 import { CreateAuditionDto } from '../common/interfaces/AuditionInterfaces';
+import { ActorProfile, ManagerProfile, ReviewerProfile } from '../common/interfaces/ProfileInterfaces';
 
 axios.defaults.baseURL = API_URL;
 
@@ -66,7 +67,6 @@ const FestivalRequests = {
     create: (festival: CreateFestivalDto) => requests.post<FestivalDto>('/festival', festival),
     update: (festival: FestivalDto) => requests.put<FestivalDto>(`/festival`, festival),
     delete: (id: string) => requests.del<void>(`/festival/${id}`),
-    apply: (festival: ShowFestivalApplicationDto) => requests.post<void>('/festival/apply', festival),
 }
 
 const TheatreRequests = {
@@ -75,6 +75,15 @@ const TheatreRequests = {
     create: (theatre: CreateTheatreDto) => requests.post<Theatre>('/theatre', theatre),
     update: (theatre: Theatre) => requests.put<Theatre>(`/theatre`, theatre),
     delete: (id: string) => requests.del<void>(`/theatre/${id}`),
+}
+const ProfileRequests = {
+    actordetails: (email: string) => requests.get<ActorProfile>(`/profile/actor/${email}`),
+    reviewerdetails: (email: string) => requests.get<ReviewerProfile>(`/profile/reviewer/${email}`),
+    managerdetails: (email: string) => requests.get<ManagerProfile>(`/profile/manager/${email}`),
+    updateactor: (actor: ActorProfile) => requests.put<ActorProfile>(`/profile/editactor`, actor),
+    updatereviewer: (reviewer: ReviewerProfile) => requests.put<ReviewerProfile>(`/profile/editreviewer`, reviewer),
+    updatemanager: (manager: ManagerProfile) => requests.put<ManagerProfile>(`/profile/editmanager`, manager),
+
 }
 
 const AuditionRequests = {
@@ -86,6 +95,7 @@ const agent = {
     FestivalRequests,
     TheatreRequests,
     AuditionRequests,
+    ProfileRequests
 }
 
 export default agent;

@@ -8,8 +8,7 @@ import Theatres from "../pages/Theatres/Theatres";
 import TheatreFormPage from "../pages/TheatreFormPage/TheatreFormPage";
 import ShowSearchPage from "../pages/ShowSearchPage/ShowSearchPage";
 import FestivalPage from "../pages/FestivalPage/FestivalPage";
-import FestivalSearchPage from "../pages/FestivalSearchPage/FestivalSearchPage";
-import FestivalRegisterPage from "../pages/FestivalRegisterPage/FestivalRegisterPage";
+import ProfilePage from "../components/Profile/Profile";
 
 export const routes: RouteObject[] = [
     {
@@ -24,11 +23,11 @@ export const routes: RouteObject[] = [
                 {path: '/admin/theatres/create', element: <TheatreFormPage />},
                 {path: '/admin/theatres/:id/edit', element: <TheatreFormPage />},
             ]},
-            {path: '/festivals', element: <FestivalSearchPage />},
             {path: '/festivals/:id', element: <FestivalPage />},
-            {path: '/festivals/:id/register', element: <FestivalRegisterPage />},
             {path: '/login', element: <LoginPage />},
             {path: '/shows', element: <ShowSearchPage />},
+            {path: '/profile/actor/:email', element: <ProfilePage />},
+
         ]
     }
 ];
