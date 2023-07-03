@@ -3,7 +3,7 @@ import { API_URL } from '../common/constants';
 import { store } from '../stores/store';
 import { toast } from 'react-toastify';
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from '../common/interfaces/AuthInterfaces';
-import { CreateFestivalDto, Festival, FestivalDto } from '../common/interfaces/FestivalInterfaces';
+import { CreateFestivalDto, Festival, FestivalDto, ShowFestivalApplicationDto } from '../common/interfaces/FestivalInterfaces';
 import { User } from '../common/interfaces/UserInterfaces';
 import { CreateTheatreDto, Theatre } from '../common/interfaces/TheatreInterfaces';
 import { CreateAuditionDto } from '../common/interfaces/AuditionInterfaces';
@@ -66,6 +66,7 @@ const FestivalRequests = {
     create: (festival: CreateFestivalDto) => requests.post<FestivalDto>('/festival', festival),
     update: (festival: FestivalDto) => requests.put<FestivalDto>(`/festival`, festival),
     delete: (id: string) => requests.del<void>(`/festival/${id}`),
+    apply: (festival: ShowFestivalApplicationDto) => requests.post<void>('/festival/apply', festival),
 }
 
 const TheatreRequests = {

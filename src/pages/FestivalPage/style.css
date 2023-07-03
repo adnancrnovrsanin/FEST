@@ -1,6 +1,10 @@
 .festivalPageContainer {
     min-height: 100vh;
+    width: 75%;
+    align-self: center;
     display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
 }
 
 .festivalDetails {

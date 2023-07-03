@@ -28,3 +28,14 @@ export interface CreateFestivalDto {
     city: string;
     organizer: Theatre | null;
 }
+
+export interface ShowFestivalApplicationDto {
+    festivalId: string;
+    serialNumber: number;
+    name: string;
+    directorName: string;
+    storyWriterName: string;
+    lengthOfPlay: number;
+    numberOfActors: number;
+    additionalInformation: string;
+}

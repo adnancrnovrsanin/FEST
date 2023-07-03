@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./style.css";
 import { useStore } from "../../stores/store";
 import { Festival } from "../../common/interfaces/FestivalInterfaces";
@@ -8,11 +8,10 @@ import { Role } from "../../common/interfaces/UserInterfaces";
 
 const FestivalPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { festivalStore, userStore } = useStore();
-    const { festivals, getFestivals } = festivalStore;
+    const { festivals } = festivalStore;
     const { isLoggedIn, user } = userStore;
-
-    useEffect(() => { getFestivals() }, [getFestivals]);
 
     useEffect(() => { setSelectedFestival(festivals.find(f => f.id === id) ?? null) }, [festivals, id]);
 
@@ -30,7 +29,9 @@ const FestivalPage = () => {
                 {
                     isLoggedIn && user?.role === Role.THEATRE_MANAGER && (
                         <div className="festivalActions">
-                            <button>Register</button>
+                            <button onClick={() => navigate(`/festivals/${id}/register`)}>
+                                Register your theatre's show
+                            </button>
                         </div>
                     )
                 }
@@ -41,7 +42,8 @@ const FestivalPage = () => {
                     <div className="organizerDetails">
                         <h2>Organizer:</h2>
                         <h3>{selectedFestival.organizer.name}</h3>
-                        <p>{selectedFestival.organizer.address}</p>
+                        <p>Theatre address: {selectedFestival.organizer.address}</p>
+                        <p>Theatre contact phone number: {selectedFestival.organizer.phoneNumber}</p>
                     </div>
                 )
             }
