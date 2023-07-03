@@ -10,15 +10,20 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProfileController : BaseApiController
     {
-        [HttpGet("actor/{id}")]
-        public async Task<ActionResult<ActorProfileDto>> GetActorAsync(Guid id)
+        [HttpGet("actor/{email}")]
+        public async Task<ActionResult<ActorProfileDto>> GetActorAsync(string email)
         {
-            return HandleResult(await Mediator.Send(new ActorDetails.Query { Id = id }));
+            return HandleResult(await Mediator.Send(new ActorDetails.Query { Email = email }));
         }
-        [HttpGet("reviewer/{id}")]
-        public async Task<ActionResult<ReviewerProfileDto>> GetReviewerAsync(Guid id)
+        [HttpGet("reviewer/{email}")]
+        public async Task<ActionResult<ReviewerProfileDto>> GetReviewerAsync(string email)
         {
-            return HandleResult(await Mediator.Send(new ReviewerDetails.Query { Id = id }));
+            return HandleResult(await Mediator.Send(new ReviewerDetails.Query { Email = email }));
+        }
+        [HttpGet("manager/{email}")]
+        public async Task<ActionResult<ReviewerProfileDto>> GetMangaerAsync(string email)
+        {
+            return HandleResult(await Mediator.Send(new TheatreManagerDetails.Query { Email = email }));
         }
         [HttpPut("editactor")]
         public async Task<IActionResult> EditActorAsync(ActorProfileDto actor)
@@ -30,20 +35,11 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new EditReviewer.Command { Reviewer = reviewer }));
         }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReviewerAsync(Guid id)
+        [HttpPut("editmanager")]
+        public async Task<IActionResult> EditManagerAsync(TheatreManagerProfileDto manager)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new EditTheatreManager.Command { TheatreManager = manager }));  
         }
-       /* [HttpPost]
-        public async Task<IActionResult> AddAuditionAsync(ActorProfileDto actor)
-        {
-            return HandleResult(await Mediator.Send(new AddAuditions.Command { Actor = actor }));
-        }
-        [HttpPost]
-        public async Task<IActionResult> AddAuditionToReviewAsync(ReviewerProfileDto actor)
-        {
-            return HandleResult(await Mediator.Send(new AddAuditionsToReview.Command { Reviewer = actor }));
-        }*/
+
     }
 }
