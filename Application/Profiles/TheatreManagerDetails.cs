@@ -1,11 +1,9 @@
 ﻿using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain;
 using Domain.ModelDTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Persistance;
 using System;
 using System.Collections.Generic;
@@ -15,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Application.Profiles
 {
-    public class ReviewerDetails
+    public class TheatreManagerDetails
     {
-        public class Query : IRequest<Result<ReviewerProfileDto>>
+        public class Query : IRequest<Result<TheatreManagerProfileDto>>
         {
-            public string Email{ get; set; }
+            public string Email { get; set; }
         }
-        public class Handler : IRequestHandler<Query, Result<ReviewerProfileDto>>
+        public class Handler : IRequestHandler<Query, Result<TheatreManagerProfileDto>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -32,11 +30,11 @@ namespace Application.Profiles
                 _mapper = mapper;
             }
 
-            public async Task<Result<ReviewerProfileDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<TheatreManagerProfileDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var profile = await _context.Users.Include(p => p.Photos).Include(p=> p.AuditionReviews).ProjectTo<ReviewerProfileDto>(_mapper.ConfigurationProvider).ToListAsync();
+                var profile = await _context.Users.Include(p => p.Photos).Include(p => p.ManagedTheatre).ProjectTo<TheatreManagerProfileDto>(_mapper.ConfigurationProvider).ToListAsync();
                 if (profile == null) return null;
-                return Result<ReviewerProfileDto>.Success(_mapper.Map<ReviewerProfileDto>(profile));
+                return Result<TheatreManagerProfileDto>.Success(_mapper.Map<TheatreManagerProfileDto>(profile));
             }
         }
     }

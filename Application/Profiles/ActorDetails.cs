@@ -19,7 +19,7 @@ namespace Application.Profiles
     {
         public class Query : IRequest<Result<ActorProfileDto>>
         {
-            public Guid Id { get; set; }
+            public string Email { get; set; }
         }
         public class Handler : IRequestHandler<Query, Result<ActorProfileDto>>
         {
