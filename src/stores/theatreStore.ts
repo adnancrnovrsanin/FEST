@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { CreateTheatreDto, Theatre } from "../common/interfaces/TheatreInterfaces";
+import { CreateTheatreDto, EditTheatreDto, Theatre } from "../common/interfaces/TheatreInterfaces";
 import agent from "../api/agent";
 
 export default class TheatreStore {
@@ -42,7 +42,7 @@ export default class TheatreStore {
         }
     };
 
-    updateTheatre = async (theatre: Theatre) => {
+    updateTheatre = async (theatre: EditTheatreDto) => {
         try {
             this.loading = true;
             await agent.TheatreRequests.update(theatre);
