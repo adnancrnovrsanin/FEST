@@ -11,28 +11,13 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230621125859_AddedPhotos")]
-    partial class AddedPhotos
+    [Migration("20230703120054_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.16");
-
-            modelBuilder.Entity("Domain.ActorAudition", b =>
-                {
-                    b.Property<string>("ActorId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("AuditionId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ActorId", "AuditionId");
-
-                    b.HasIndex("AuditionId");
-
-                    b.ToTable("ActorAuditions");
-                });
 
             modelBuilder.Entity("Domain.ActorShowRole", b =>
                 {
@@ -55,6 +40,26 @@ namespace Persistance.Migrations
                     b.HasIndex("ShowId");
 
                     b.ToTable("ActorShowRoles");
+                });
+
+            modelBuilder.Entity("Domain.ActorShowRoleAudition", b =>
+                {
+                    b.Property<string>("ActorId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AuditionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ShowRoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ActorId", "AuditionId", "ShowRoleId");
+
+                    b.HasIndex("AuditionId");
+
+                    b.HasIndex("ShowRoleId");
+
+                    b.ToTable("ActorShowRoleAuditions");
                 });
 
             modelBuilder.Entity("Domain.AppUser", b =>
@@ -136,6 +141,9 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("VideoURL")
                         .HasColumnType("TEXT");
 
@@ -195,47 +203,47 @@ namespace Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4a783d95-6c95-484e-93f7-d516d4fade1a"),
+                            Id = new Guid("1cfa698f-516f-451b-80d7-c4a70e7b05ad"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 8, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7593),
+                            EndDate = new DateTime(2023, 9, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5510),
                             Name = "Festival 1",
-                            StartDate = new DateTime(2023, 7, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7588),
+                            StartDate = new DateTime(2023, 8, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5491),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("6d5755ad-d4b5-4529-b624-ade377a50589"),
+                            Id = new Guid("0420255b-52a9-442c-81ed-b2626685b561"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 10, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7602),
+                            EndDate = new DateTime(2023, 11, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5554),
                             Name = "Festival 2",
-                            StartDate = new DateTime(2023, 9, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7602),
+                            StartDate = new DateTime(2023, 10, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5539),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("e037b798-9c44-4c74-abcd-14275ae56210"),
+                            Id = new Guid("52ea9009-7d82-4f17-98f4-98d6e505a4c3"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 12, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7609),
+                            EndDate = new DateTime(2024, 1, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5592),
                             Name = "Festival 3",
-                            StartDate = new DateTime(2023, 11, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7608),
+                            StartDate = new DateTime(2023, 12, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5577),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("694199d3-d8e4-4409-88b8-30fe99d35e0c"),
+                            Id = new Guid("a3d23763-d578-4d41-addd-b5dd984ec5e6"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 2, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7615),
+                            EndDate = new DateTime(2024, 3, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5631),
                             Name = "Festival 4",
-                            StartDate = new DateTime(2024, 1, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7615),
+                            StartDate = new DateTime(2024, 2, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5621),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("5cf693bc-6987-4650-b748-be5039fd6ce6"),
+                            Id = new Guid("88cd79ac-60e9-4c11-ac24-318b75c19748"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 4, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7621),
+                            EndDate = new DateTime(2024, 5, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5746),
                             Name = "Festival 5",
-                            StartDate = new DateTime(2024, 3, 21, 12, 58, 59, 167, DateTimeKind.Utc).AddTicks(7621),
+                            StartDate = new DateTime(2024, 4, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5731),
                             ZipCode = 36300
                         });
                 });
@@ -273,12 +281,17 @@ namespace Persistance.Migrations
                     b.Property<int>("LengthOfPlay")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("TimeOfPlay")
+                    b.Property<Guid>("TheatreShowScheduleId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TimeOfPlay")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FestivalId");
+
+                    b.HasIndex("TheatreShowScheduleId");
 
                     b.ToTable("Schedules");
                 });
@@ -292,33 +305,87 @@ namespace Persistance.Migrations
                     b.Property<string>("AdditionalInformation")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("DirectorName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("LengthOfPlay")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("SerialNumber")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("StoryWriterName")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Shows");
                 });
 
-            modelBuilder.Entity("Domain.ShowApplicationReview", b =>
+            modelBuilder.Entity("Domain.ShowFestivalApplication", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("FestivalId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("NumberOfActors")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("ShowId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ReviewerId")
+                    b.Property<Guid>("TheatreId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FestivalId");
+
+                    b.HasIndex("ShowId");
+
+                    b.HasIndex("TheatreId");
+
+                    b.ToTable("ShowFestivalApplications");
+                });
+
+            modelBuilder.Entity("Domain.ShowFestivalApplicationReview", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("Acceptable")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ShowId", "ReviewerId");
+                    b.Property<Guid?>("FestivalId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReviewerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ShowFestivalApplicationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ShowId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FestivalId");
 
                     b.HasIndex("ReviewerId");
 
-                    b.ToTable("ShowApplicationReviews");
+                    b.HasIndex("ShowFestivalApplicationId");
+
+                    b.HasIndex("ShowId");
+
+                    b.ToTable("ShowFestivalApplicationReviews");
                 });
 
             modelBuilder.Entity("Domain.ShowRole", b =>
@@ -330,7 +397,12 @@ namespace Persistance.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("ShowId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ShowId");
 
                     b.ToTable("ShowRoles");
                 });
@@ -344,6 +416,9 @@ namespace Persistance.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ManagerId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -355,10 +430,13 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ManagerId")
+                        .IsUnique();
+
                     b.ToTable("Theatres");
                 });
 
-            modelBuilder.Entity("Domain.TheatreShows", b =>
+            modelBuilder.Entity("Domain.TheatreShow", b =>
                 {
                     b.Property<Guid>("TheatreId")
                         .HasColumnType("TEXT");
@@ -378,22 +456,23 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.TheatreShowSchedule", b =>
                 {
-                    b.Property<Guid>("TheatreId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ShowId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ScheduleId")
+                    b.Property<Guid>("TheatreId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("TheatreId", "ShowId", "ScheduleId");
-
-                    b.HasIndex("ScheduleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("TheaterShowSchedules");
+                    b.HasIndex("TheatreId");
+
+                    b.ToTable("TheatreShowSchedules");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -524,25 +603,6 @@ namespace Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.ActorAudition", b =>
-                {
-                    b.HasOne("Domain.AppUser", "Actor")
-                        .WithMany("Auditions")
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Audition", "Audition")
-                        .WithMany("Auditioners")
-                        .HasForeignKey("AuditionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actor");
-
-                    b.Navigation("Audition");
-                });
-
             modelBuilder.Entity("Domain.ActorShowRole", b =>
                 {
                     b.HasOne("Domain.AppUser", "Actor")
@@ -568,6 +628,33 @@ namespace Persistance.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("Show");
+                });
+
+            modelBuilder.Entity("Domain.ActorShowRoleAudition", b =>
+                {
+                    b.HasOne("Domain.AppUser", "Actor")
+                        .WithMany("Auditions")
+                        .HasForeignKey("ActorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Audition", "Audition")
+                        .WithMany("Auditioners")
+                        .HasForeignKey("AuditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.ShowRole", "ShowRole")
+                        .WithMany("ShowRoleAuditions")
+                        .HasForeignKey("ShowRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Audition");
+
+                    b.Navigation("ShowRole");
                 });
 
             modelBuilder.Entity("Domain.AuditionReview", b =>
@@ -614,29 +701,88 @@ namespace Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.TheatreShowSchedule", "TheatreShow")
+                        .WithMany("Schedules")
+                        .HasForeignKey("TheatreShowScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Festival");
+
+                    b.Navigation("TheatreShow");
                 });
 
-            modelBuilder.Entity("Domain.ShowApplicationReview", b =>
+            modelBuilder.Entity("Domain.ShowFestivalApplication", b =>
                 {
-                    b.HasOne("Domain.AppUser", "Reviewer")
-                        .WithMany("ShowApplications")
-                        .HasForeignKey("ReviewerId")
+                    b.HasOne("Domain.Festival", "Festival")
+                        .WithMany()
+                        .HasForeignKey("FestivalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Show", "Show")
-                        .WithMany("ApplicationReviews")
+                        .WithMany("Applications")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Theatre", "Theatre")
+                        .WithMany()
+                        .HasForeignKey("TheatreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Festival");
+
+                    b.Navigation("Show");
+
+                    b.Navigation("Theatre");
+                });
+
+            modelBuilder.Entity("Domain.ShowFestivalApplicationReview", b =>
+                {
+                    b.HasOne("Domain.Festival", null)
+                        .WithMany("ShowApplications")
+                        .HasForeignKey("FestivalId");
+
+                    b.HasOne("Domain.AppUser", "Reviewer")
+                        .WithMany("ShowApplications")
+                        .HasForeignKey("ReviewerId");
+
+                    b.HasOne("Domain.ShowFestivalApplication", "Application")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ShowFestivalApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Show", null)
+                        .WithMany("ApplicationReviews")
+                        .HasForeignKey("ShowId");
+
+                    b.Navigation("Application");
+
                     b.Navigation("Reviewer");
+                });
+
+            modelBuilder.Entity("Domain.ShowRole", b =>
+                {
+                    b.HasOne("Domain.Show", "Show")
+                        .WithMany()
+                        .HasForeignKey("ShowId");
 
                     b.Navigation("Show");
                 });
 
-            modelBuilder.Entity("Domain.TheatreShows", b =>
+            modelBuilder.Entity("Domain.Theatre", b =>
+                {
+                    b.HasOne("Domain.AppUser", "Manager")
+                        .WithOne("ManagedTheatre")
+                        .HasForeignKey("Domain.Theatre", "ManagerId");
+
+                    b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("Domain.TheatreShow", b =>
                 {
                     b.HasOne("Domain.Show", "Show")
                         .WithMany("Theatres")
@@ -657,12 +803,6 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.TheatreShowSchedule", b =>
                 {
-                    b.HasOne("Domain.Schedule", "Schedule")
-                        .WithMany("TheatreShows")
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Show", "Show")
                         .WithMany("TheatreSchedules")
                         .HasForeignKey("ShowId")
@@ -674,8 +814,6 @@ namespace Persistance.Migrations
                         .HasForeignKey("TheatreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Schedule");
 
                     b.Navigation("Show");
 
@@ -741,6 +879,8 @@ namespace Persistance.Migrations
 
                     b.Navigation("Auditions");
 
+                    b.Navigation("ManagedTheatre");
+
                     b.Navigation("Photos");
 
                     b.Navigation("ShowApplications");
@@ -755,12 +895,9 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Festival", b =>
                 {
-                    b.Navigation("ShowSchedules");
-                });
+                    b.Navigation("ShowApplications");
 
-            modelBuilder.Entity("Domain.Schedule", b =>
-                {
-                    b.Navigation("TheatreShows");
+                    b.Navigation("ShowSchedules");
                 });
 
             modelBuilder.Entity("Domain.Show", b =>
@@ -769,14 +906,23 @@ namespace Persistance.Migrations
 
                     b.Navigation("ApplicationReviews");
 
+                    b.Navigation("Applications");
+
                     b.Navigation("TheatreSchedules");
 
                     b.Navigation("Theatres");
                 });
 
+            modelBuilder.Entity("Domain.ShowFestivalApplication", b =>
+                {
+                    b.Navigation("Reviews");
+                });
+
             modelBuilder.Entity("Domain.ShowRole", b =>
                 {
                     b.Navigation("RoleActors");
+
+                    b.Navigation("ShowRoleAuditions");
                 });
 
             modelBuilder.Entity("Domain.Theatre", b =>
@@ -786,6 +932,11 @@ namespace Persistance.Migrations
                     b.Navigation("ShowSchedules");
 
                     b.Navigation("Shows");
+                });
+
+            modelBuilder.Entity("Domain.TheatreShowSchedule", b =>
+                {
+                    b.Navigation("Schedules");
                 });
 #pragma warning restore 612, 618
         }
