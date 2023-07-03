@@ -1,0 +1,51 @@
+Profilna stranica
+	- Podaci o osobi ciji profil se posmatra
+	- Slike koje je postavila ta osoba
+	- (Za glumca) Sve audicije na koje se prijavio taj glumac 
+		+ Status audicije je dodatno prikazan za svaku audiciju
+		+ Ovo vidi samo glumac kada udje na svoj profil
+	- (Za glumca) Sve uloge na koje je primljen
+		+ Ovo ukljucuje i uloge koje je prethodno odradio i one koje tek treba da izvede
+		+ Uloge ce biti sortirane po datumu od najskorijih do najranijih
+	- (Za menadzera pozorista) Pozoriste koje on menadzerise trenutno
+	- (Za menadzera festivala) Festival koji on menadzerise trenutno
+	
+Stranica za pretragu predstava
+	- Ovde ce moci da se pregledaju sve predstave
+	- Pretraga
+	- Filtriranje i sortiranje
+	
+Stranica za pretragu festivala
+	- Ovde ce moci da se pregledaju svi festivali
+	- Pretraga
+	- Filtriranje i sortiranje
+	
+Stranica za detalje festivala
+	- Menadzer pozorista ce moci da prijavi svoje pozoriste zajedno sa nekom predstavom na festival koji gleda
+	
+Stranica za detalje predstava
+	- Glumac moze da se prijavi za audiciju za predstavu ciju stranicu gleda
+	
+Stranica za pretragu aplikacija za festival i svih audicija (za recenzenta)
+	- Pretraga
+	- Filtriranje i sortiranje
+
+Stranica za prikaz aplikacije za festival (za recenzenta)
+	- Detalji o aplikaciji za festival
+		+ Detalji o festivalu za koji se aplicira
+		+ Detalji o pozoristu koje aplicira
+		+ Detalji o njihovoj predstavi
+	- Mogucnost ocenjivanja aplikacije koju posmatra
+
+Stranica za prikaz audicije (za recenzenta)
+	- Detalji o audiciji
+		+ Detalji o predstavi za koju se prijavljuje glumac
+		+ Detalji o glumcu
+		+ Video audicije kao i opis audicije
+	- Mogucnost ocenjivanja audicije koja se posmatra
+	
+Login stranica *
+
+Home stranica - na kraju
+
+

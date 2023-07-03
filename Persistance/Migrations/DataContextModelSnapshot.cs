@@ -37,7 +37,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("ActorShowRoles");
+                    b.ToTable("ActorShowRoles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.ActorShowRoleAudition", b =>
@@ -57,7 +57,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ShowRoleId");
 
-                    b.ToTable("ActorShowRoleAuditions");
+                    b.ToTable("ActorShowRoleAuditions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.AppUser", b =>
@@ -147,7 +147,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Auditions");
+                    b.ToTable("Auditions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.AuditionReview", b =>
@@ -165,7 +165,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ReviewerId");
 
-                    b.ToTable("AuditionReviews");
+                    b.ToTable("AuditionReviews", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Festival", b =>
@@ -196,7 +196,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("OrganizerId");
 
-                    b.ToTable("Festivals");
+                    b.ToTable("Festivals", (string)null);
 
                     b.HasData(
                         new
@@ -264,7 +264,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Schedule", b =>
@@ -286,7 +286,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("FestivalId");
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Schedules", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Show", b =>
@@ -312,7 +312,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shows");
+                    b.ToTable("Shows", (string)null);
                 });
 
             modelBuilder.Entity("Domain.ShowFestivalApplicationReview", b =>
@@ -338,7 +338,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ReviewerId");
 
-                    b.ToTable("ShowFestivalApplicationReviews");
+                    b.ToTable("ShowFestivalApplicationReviews", (string)null);
                 });
 
             modelBuilder.Entity("Domain.ShowRole", b =>
@@ -357,7 +357,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("ShowRoles");
+                    b.ToTable("ShowRoles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Theatre", b =>
@@ -386,7 +386,7 @@ namespace Persistance.Migrations
                     b.HasIndex("ManagerId")
                         .IsUnique();
 
-                    b.ToTable("Theatres");
+                    b.ToTable("Theatres", (string)null);
                 });
 
             modelBuilder.Entity("Domain.TheatreShows", b =>
@@ -404,7 +404,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("TheatreShows");
+                    b.ToTable("TheatreShows", (string)null);
                 });
 
             modelBuilder.Entity("Domain.TheatreShowSchedule", b =>
@@ -424,7 +424,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("TheaterShowSchedules");
+                    b.ToTable("TheaterShowSchedules", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

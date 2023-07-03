@@ -24,8 +24,9 @@ namespace Persistance
         public DbSet<AuditionReview> AuditionReviews { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<ShowFestivalApplicationReview> ShowFestivalApplicationReviews { get; set; }
-        public DbSet<TheatreShowSchedule> TheaterShowSchedules { get; set; }
-        public DbSet<TheatreShows> TheatreShows { get; set; }
+        public DbSet<ShowFestivalApplication> ShowFestivalApplications { get; set; }
+        public DbSet<TheatreShowSchedule> TheatreShowSchedules { get; set; }
+        public DbSet<TheatreShow> TheatreShows { get; set; }
         public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -58,7 +59,7 @@ namespace Persistance
                     .HasForeignKey(asr => asr.ShowId);
             });
 
-            builder.Entity<TheatreShows>(ts => {
+            builder.Entity<TheatreShow>(ts => {
                 ts.HasKey(t => new {t.TheatreId, t.ShowId});
                 ts.HasOne(t => t.Theatre)
                     .WithMany(t => t.Shows)
@@ -69,29 +70,25 @@ namespace Persistance
             });
 
             builder.Entity<TheatreShowSchedule>(tss => {
-                tss.HasKey(t => new {t.TheatreId, t.ShowId, t.ScheduleId});
+                tss.HasKey(t => t.Id);
                 tss.HasOne(t => t.Theatre)
                     .WithMany(t => t.ShowSchedules)
                     .HasForeignKey(t => t.TheatreId);
                 tss.HasOne(t => t.Show)
                     .WithMany(s => s.TheatreSchedules)
                     .HasForeignKey(t => t.ShowId);
-                tss.HasOne(t => t.Schedule)
-                    .WithMany(s => s.TheatreShows)
-                    .HasForeignKey(t => t.ScheduleId);
+                tss.HasMany(t => t.Schedules)
+                    .WithOne(s => s.TheatreShow)
+                    .HasForeignKey(s => s.TheatreShowScheduleId);
             });
 
             builder.Entity<ShowFestivalApplicationReview>(sar => {
-                sar.HasKey(s => new {s.ShowId, s.ReviewerId});
-                sar.HasOne(s => s.Show)
-                    .WithMany(s => s.ApplicationReviews)
-                    .HasForeignKey(s => s.ShowId);
                 sar.HasOne(s => s.Reviewer)
                     .WithMany(s => s.ShowApplications)
                     .HasForeignKey(s => s.ReviewerId);
-                sar.HasOne(s => s.Festival)
-                    .WithMany(s => s.ShowApplications)
-                    .HasForeignKey(s => s.FestivalId);
+                sar.HasOne(s => s.Application)
+                    .WithMany(s => s.Reviews)
+                    .HasForeignKey(s => s.ShowFestivalApplicationId);
             });
 
             builder.Entity<AuditionReview>(ar => {
@@ -113,6 +110,12 @@ namespace Persistance
                 .HasOne(s => s.Festival)
                 .WithMany(f => f.ShowSchedules)
                 .HasForeignKey(s => s.FestivalId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.Entity<Schedule>()
+                .HasOne(s => s.TheatreShow)
+                .WithMany(ts => ts.Schedules)
+                .HasForeignKey(s => s.TheatreShowScheduleId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Theatre>()

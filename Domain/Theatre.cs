@@ -11,7 +11,7 @@ namespace Domain
         public string ManagerId { get; set; }
 
         public ICollection<Festival> FestivalsOrganized { get; set; }
-        public ICollection<TheatreShows> Shows { get; set; }
+        public ICollection<TheatreShow> Shows { get; set; }
         public ICollection<TheatreShowSchedule> ShowSchedules { get; set; }
     }
 }

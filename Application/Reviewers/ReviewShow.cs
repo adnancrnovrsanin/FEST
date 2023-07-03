@@ -72,7 +72,7 @@ namespace Application.Reviewers
                         LengthOfPlay = show.LengthOfPlay,
                         TimeOfPlay = null,
                         Festival = festival,
-                        TheatreShowSchedule = theatreShowSchedule
+                        TheatreShow = theatreShowSchedule
                     };
 
                     theatreShowSchedule.Schedules.Add(schedule);

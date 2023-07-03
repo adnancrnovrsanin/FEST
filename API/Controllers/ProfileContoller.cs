@@ -8,7 +8,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProfileContoller : BaseApiController
+    public class ProfileController : BaseApiController
     {
         [HttpGet("actor/{id}")]
         public async Task<ActionResult<ActorProfileDto>> GetActorAsync(Guid id)
