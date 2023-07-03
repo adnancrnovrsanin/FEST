@@ -37,7 +37,8 @@ namespace Application.Core
             CreateMap<Festival, FestivalDto>()
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => s.StartDate.ToUniversalTime()))
                 .ForMember(d => d.EndDate, o => o.MapFrom(s => s.EndDate.ToUniversalTime()));
-            CreateMap<Theatre, TheatreDto>();
+            CreateMap<Theatre, TheatreDto>()
+                .ForMember(d => d.ManagerEmail, o => o.MapFrom(s => s.Manager.Email));
             CreateMap<TheatreDto, Theatre>();
             CreateMap<FestivalDto, Festival>()
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => DateTime.Parse(s.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind)))

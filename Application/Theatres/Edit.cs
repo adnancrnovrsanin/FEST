@@ -44,7 +44,11 @@ namespace Application.Theatres
 
                 if (theatre == null) return null;
 
+                var manager = await _context.Users.SingleOrDefaultAsync(x => x.Email == request.Theatre.ManagerEmail);
+
                 _mapper.Map(request.Theatre, theatre);
+
+                theatre.Manager = manager;
 
                 var result = await _context.SaveChangesAsync() > 0;
 

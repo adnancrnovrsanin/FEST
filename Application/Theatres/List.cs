@@ -30,7 +30,7 @@ namespace Application.Theatres
 
             public async Task<Result<List<TheatreDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var theatres = await _context.Theatres.ToListAsync();
+                var theatres = await _context.Theatres.Include(t => t.Manager).ToListAsync();
 
                 if (theatres == null) return Result<List<TheatreDto>>.Success(new List<TheatreDto>());
 

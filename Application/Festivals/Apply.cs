@@ -53,6 +53,7 @@ namespace Application.Festivals
                     StoryWriterName = request.FestivalApplication.StoryWriterName,
                     LengthOfPlay = request.FestivalApplication.LengthOfPlay,
                     AdditionalInformation = request.FestivalApplication.AdditionalInformation,
+                    Applications = new List<ShowFestivalApplication>()
                 };
 
                 var showFestivalApplication = new ShowFestivalApplication {
@@ -63,6 +64,7 @@ namespace Application.Festivals
                 };
 
                 show.Applications.Add(showFestivalApplication);
+
                 _context.Shows.Add(show);
                 _context.ShowFestivalApplications.Add(showFestivalApplication);
 

@@ -12,5 +12,7 @@ namespace Domain.ModelDTOs
         public string Address {get; set;}
         public string PhoneNumber { get; set; }
         public int YearOfCreation { get; set; }
+        public string ManagerId { get; set; }
+        public string ManagerEmail { get; set; }
     }
 }
