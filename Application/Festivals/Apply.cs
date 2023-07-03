@@ -46,6 +46,10 @@ namespace Application.Festivals
 
                 if (festival == null) return null;
 
+                var existingApplication = await _context.ShowFestivalApplications.FirstOrDefaultAsync(sfa => sfa.TheatreId == theatre.Id && sfa.FestivalId == festival.Id);
+
+                if (existingApplication != null) return Result<Unit>.Failure("You have already applied for this festival");
+
                 var show = new Show {
                     SerialNumber = request.FestivalApplication.SerialNumber,
                     Name = request.FestivalApplication.Name,
