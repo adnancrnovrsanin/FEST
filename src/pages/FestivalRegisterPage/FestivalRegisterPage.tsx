@@ -74,8 +74,6 @@ const FestivalRegisterPage = () => {
                                     additionalInformation: values.additionalInformation
                                 }
 
-                                // console.log(registerRequest);
-
                                 await agent.FestivalRequests.apply(registerRequest);
                             } catch (error) {
                                 console.log(error);

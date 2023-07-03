@@ -24,7 +24,6 @@ const Theatres = () => {
                         <th scope="col">Address</th>
                         <th scope="col">Phone number</th>
                         <th scope="col">Year of creation</th>
-                        <th scope="col">Manager's email</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -37,7 +36,6 @@ const Theatres = () => {
                                     <td>{theatre.address}</td>
                                     <td>{theatre.phoneNumber}</td>
                                     <td>{theatre.yearOfCreation}</td>
-                                    <td>{theatre.managerEmail}</td>
                                     <td>
                                         <Link className="btn btn-outline-light tableButtons" to={`/admin/theatres/${theatre.id}/edit`}>Edit</Link>
                                         <button className="btn btn-outline-light tableButtons" onClick={() => deleteTheatre(theatre.id)}>Delete</button>
