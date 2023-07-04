@@ -43,6 +43,8 @@ namespace Application.Core
             CreateMap<FestivalDto, Festival>()
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => DateTime.Parse(s.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind)))
                 .ForMember(d => d.EndDate, o => o.MapFrom(s => DateTime.Parse(s.EndDate, null, System.Globalization.DateTimeStyles.RoundtripKind)));
+            CreateMap<ActorProfileDto, ActorProfileDto>();
+            CreateMap<ActorProfileDto, AppUser>();
             CreateMap<AppUser, ActorProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)))
                 .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos.Where(p => !p.IsMain)))
@@ -50,7 +52,19 @@ namespace Application.Core
                 .ForMember(d => d.AuditionsNotReviewed, o => o.MapFrom(s => s.Auditions.Where(a => a.Audition.Reviews.Count < 3)));
             CreateMap<AppUser, ReviewerProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
-
+            CreateMap<ShowRole, ShowRoleDto>();
+            CreateMap<ShowRoleDto, ShowRole>();
+            CreateMap<ShowRole, ShowRole>();
+            CreateMap<ShowFestivalApplication, ShowFestivalApplication>();
+            CreateMap<ShowFestivalApplicationDto, ShowFestivalApplicationDto>();
+            CreateMap<ShowFestivalApplicationDto, ShowFestivalApplication>();
+            CreateMap<ShowFestivalApplication, ShowFestivalApplicationDto>()
+                .ForMember(d => d.SerialNumber, o => o.MapFrom(s => s.Show.SerialNumber))
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.Show.Name))
+                .ForMember(d => d.DirectorName, o => o.MapFrom(s => s.Show.DirectorName))
+                .ForMember(d => d.StoryWriterName, o => o.MapFrom(s => s.Show.StoryWriterName))
+                .ForMember(d => d.LengthOfPlay, o => o.MapFrom(s => s.Show.LengthOfPlay))
+                .ForMember(d => d.AdditionalInformation, o => o.MapFrom(s => s.Show.AdditionalInformation));
         }
     }
 }

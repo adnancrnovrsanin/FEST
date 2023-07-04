@@ -52,5 +52,11 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Apply.Command {FestivalApplication = festivalApplication}));
         }
+
+        [HttpGet("applications")]
+        public async Task<ActionResult<List<ShowFestivalApplicationDto>>> GetFestivalApplicationsAsync()
+        {
+            return HandleResult(await Mediator.Send(new ListApplications.Query()));
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace Domain.ModelDTOs
 {
     public class ShowFestivalApplicationDto
     {
+        public Guid Id { get; set; }
         public Guid TheatreId { get; set; }
         public Guid FestivalId { get; set; }
         public int SerialNumber { get; set; }

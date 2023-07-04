@@ -10,6 +10,6 @@ namespace Domain
         public string City { get; set; }
         public Theatre Organizer { get; set; }
         public ICollection<Schedule> ShowSchedules { get; set; }
-        public ICollection<ShowFestivalApplicationReview> ShowApplications { get; set; }
+        public ICollection<ShowFestivalApplication> ShowApplications { get; set; }
     }
 }
