@@ -17,7 +17,7 @@ namespace Application.Profiles
     {
         public class Query : IRequest<Result<TheatreManagerProfileDto>>
         {
-            public string Email { get; set; }
+            public string Id { get; set; }
         }
         public class Handler : IRequestHandler<Query, Result<TheatreManagerProfileDto>>
         {
@@ -32,9 +32,9 @@ namespace Application.Profiles
 
             public async Task<Result<TheatreManagerProfileDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var profile = await _context.Users.Include(p => p.Photos).Include(p => p.ManagedTheatre).ProjectTo<TheatreManagerProfileDto>(_mapper.ConfigurationProvider).ToListAsync();
+                var profile = await _context.Users.Include(p => p.Photos).Include(p => p.ManagedTheatre).ProjectTo<TheatreManagerProfileDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(u => u.Id == request.Id);
                 if (profile == null) return null;
-                return Result<TheatreManagerProfileDto>.Success(_mapper.Map<TheatreManagerProfileDto>(profile));
+                return Result<TheatreManagerProfileDto>.Success(profile);
             }
         }
     }

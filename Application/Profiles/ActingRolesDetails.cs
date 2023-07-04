@@ -1,11 +1,9 @@
 ﻿using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain;
 using Domain.ModelDTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Persistance;
 using System;
 using System.Collections.Generic;
@@ -15,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Application.Profiles
 {
-    public class ActorDetails
+    public class ActingRolesDetails
     {
-        public class Query : IRequest<Result<ActorProfileDto>>
+        public class Query : IRequest<Result<List<ActorShowRoleDto>>>
         {
             public string Id { get; set; }
         }
-        public class Handler : IRequestHandler<Query, Result<ActorProfileDto>>
+        public class Handler : IRequestHandler<Query, Result<List<ActorShowRoleDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -32,11 +30,11 @@ namespace Application.Profiles
                 _mapper = mapper;
             }
 
-            public async Task<Result<ActorProfileDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<ActorShowRoleDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var profile = await _context.Users.Include(p => p.Photos).Include(p => p.Auditions).Include(p => p.ActingRoles).ProjectTo<ActorProfileDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(u => u.Id == request.Id);
-                if (profile == null) return null;
-                return  Result<ActorProfileDto>.Success(profile);     
+                var showRoles = await _context.ActorShowRoles.Include(asr => asr.Actor).ProjectTo<ActorShowRoleDto>(_mapper.ConfigurationProvider).Where(asr => asr.Actor.Id == request.Id).ToListAsync();
+                if (showRoles == null) return Result<List<ActorShowRoleDto>>.Success(new List<ActorShowRoleDto>());
+                return Result<List<ActorShowRoleDto>>.Success(showRoles);
             }
         }
     }

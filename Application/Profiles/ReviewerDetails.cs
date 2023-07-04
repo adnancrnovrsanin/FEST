@@ -19,7 +19,7 @@ namespace Application.Profiles
     {
         public class Query : IRequest<Result<ReviewerProfileDto>>
         {
-            public string Email{ get; set; }
+            public string Id{ get; set; }
         }
         public class Handler : IRequestHandler<Query, Result<ReviewerProfileDto>>
         {
@@ -34,9 +34,9 @@ namespace Application.Profiles
 
             public async Task<Result<ReviewerProfileDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var profile = await _context.Users.Include(p => p.Photos).Include(p=> p.AuditionReviews).ProjectTo<ReviewerProfileDto>(_mapper.ConfigurationProvider).ToListAsync();
+                var profile = await _context.Users.Include(p => p.Photos).Include(p=> p.AuditionReviews).ProjectTo<ReviewerProfileDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(u => u.Id == request.Id);
                 if (profile == null) return null;
-                return Result<ReviewerProfileDto>.Success(_mapper.Map<ReviewerProfileDto>(profile));
+                return Result<ReviewerProfileDto>.Success(profile);
             }
         }
     }
