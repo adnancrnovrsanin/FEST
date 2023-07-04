@@ -32,6 +32,17 @@ namespace Application.Core
                 .ForMember(d => d.AverageReview, o => o.MapFrom(s => s.Audition.Reviews.Count == 0 ? 0 : s.Audition.Reviews.Average(r => r.Review)));
             CreateMap<Audition, Audition>();
             CreateMap<Schedule, Schedule>();
+            CreateMap<ScheduleDto, ScheduleDto>();
+            CreateMap<Schedule, ScheduleDto>()
+                .ForMember(sd => sd.FestivalName, o => o.MapFrom(s => s.Festival.Name))
+                .ForMember(sd => sd.TheatreName, o => o.MapFrom(s => s.TheatreShow.Theatre.Name))
+                .ForMember(sd => sd.ShowName, o => o.MapFrom(s => s.TheatreShow.Show.Name))
+                .ForMember(sd => sd.FestivalId, o => o.MapFrom(s => s.Festival.Id))
+                .ForMember(sd => sd.TheatreId, o => o.MapFrom(s => s.TheatreShow.Theatre.Id))
+                .ForMember(sd => sd.ShowId, o => o.MapFrom(s => s.TheatreShow.Show.Id))
+                .ForMember(sd => sd.TimeOfPlay, o => o.MapFrom(s => s.TimeOfPlay.GetValueOrDefault().ToUniversalTime()));
+            CreateMap<ScheduleDto, Schedule>()
+                .ForMember(s => s.TimeOfPlay, o => o.MapFrom(sd => DateTime.Parse(sd.TimeOfPlay, null, System.Globalization.DateTimeStyles.RoundtripKind)));
             CreateMap<Show, Show>();
             CreateMap<Theatre, Theatre>();
             CreateMap<Festival, FestivalDto>()

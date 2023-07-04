@@ -44,6 +44,8 @@ namespace Application.Reviewers
                 
                 if (showApplication == null) return null;
 
+                if (showApplication.Reviews.Any(x => x.ReviewerId == reviewer.Id)) return Result<Unit>.Failure("You have already reviewed this show");
+
                 if (request.ShowFestivalApplicationReview.Acceptable == true && showApplication.Reviews.Count == 1) {
                     var festival = await _context.Festivals.SingleOrDefaultAsync(x => x.Id == showApplication.FestivalId);
 
@@ -65,10 +67,11 @@ namespace Application.Reviewers
 
                     var theatreShowSchedule = new TheatreShowSchedule {
                         Theatre = theatre,
-                        Show = show
+                        Show = show,
+                        Schedules = new List<Domain.Schedule>()
                     };
 
-                    var schedule = new Schedule {
+                    var schedule = new Domain.Schedule {
                         LengthOfPlay = show.LengthOfPlay,
                         TimeOfPlay = null,
                         Festival = festival,
