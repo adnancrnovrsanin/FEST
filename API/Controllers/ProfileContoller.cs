@@ -10,20 +10,26 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProfileController : BaseApiController
     {
-        [HttpGet("actor/{email}")]
-        public async Task<ActionResult<ActorProfileDto>> GetActorAsync(string email)
+
+        [HttpGet("actor/{id}")]
+        public async Task<ActionResult<ActorProfileDto>> GetActorAsync(string Id)
         {
-            return HandleResult(await Mediator.Send(new ActorDetails.Query { Email = email }));
+            return HandleResult(await Mediator.Send(new ActorDetails.Query { Id = Id }));
         }
-        [HttpGet("reviewer/{email}")]
-        public async Task<ActionResult<ReviewerProfileDto>> GetReviewerAsync(string email)
+        [HttpGet("reviewer/{id}")]
+        public async Task<ActionResult<ReviewerProfileDto>> GetReviewerAsync(string id)
         {
-            return HandleResult(await Mediator.Send(new ReviewerDetails.Query { Email = email }));
+            return HandleResult(await Mediator.Send(new ReviewerDetails.Query { Id = id }));
         }
-        [HttpGet("manager/{email}")]
-        public async Task<ActionResult<ReviewerProfileDto>> GetMangaerAsync(string email)
+        [HttpGet("manager/{id}")]
+        public async Task<ActionResult<ReviewerProfileDto>> GetMangaerAsync(string id)
         {
-            return HandleResult(await Mediator.Send(new TheatreManagerDetails.Query { Email = email }));
+            return HandleResult(await Mediator.Send(new TheatreManagerDetails.Query { Id = id }));
+        }
+        [HttpGet("roles")]
+        public async Task<ActionResult<List<ActorShowRoleDto>>> GetActingRolesAsync(string Id)
+        {
+            return HandleResult(await Mediator.Send(new ActingRolesDetails.Query { Id = Id }));
         }
         [HttpPut("editactor")]
         public async Task<IActionResult> EditActorAsync(ActorProfileDto actor)
@@ -38,8 +44,9 @@ namespace API.Controllers
         [HttpPut("editmanager")]
         public async Task<IActionResult> EditManagerAsync(TheatreManagerProfileDto manager)
         {
-            return HandleResult(await Mediator.Send(new EditTheatreManager.Command { TheatreManager = manager }));  
+            return HandleResult(await Mediator.Send(new EditTheatreManager.Command { TheatreManager = manager }));
         }
+        
 
     }
 }
