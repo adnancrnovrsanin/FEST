@@ -19,9 +19,15 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Edit.Command {Schedule = schedule}));
         }
 
-        [AllowAnonymous]
         [HttpGet("theatre/unappointed/{id}")]
         public async Task<IActionResult> GetUnappointedScheduleByTheatreIdAsync(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new GetUnappointedSchedulesByTheatreId.Query {TheatreId = id}));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("theatre/{id}")]
+        public async Task<IActionResult> GetScheduleByTheatreIdAsync(Guid id)
         {
             return HandleResult(await Mediator.Send(new GetSchedulesByTheatreId.Query {TheatreId = id}));
         }
