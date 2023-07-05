@@ -49,7 +49,8 @@ namespace Application.Core
                 .ForMember(d => d.AuditionsNotReviewed, o => o.MapFrom(s => s.Auditions.Where(a => a.Audition.Reviews.Count < 3)));
             CreateMap<AppUser, ReviewerProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
-            CreateMap<ActorShowRole, ActorShowRoleDto>();   
+            CreateMap<ActorShowRole, ActorShowRoleDto>();
+            CreateMap<AuditionReview, AuditionsReviewDto>();
 
         }
     }

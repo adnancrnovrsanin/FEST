@@ -2,6 +2,7 @@
 using Application.Profiles;
 using Domain;
 using Domain.ModelDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -30,6 +31,21 @@ namespace API.Controllers
         public async Task<ActionResult<List<ActorShowRoleDto>>> GetActingRolesAsync(string Id)
         {
             return HandleResult(await Mediator.Send(new ActingRolesDetails.Query { Id = Id }));
+        }
+        [HttpGet("auditionsreviewed")]
+        public async Task<ActionResult<List<AuditionDto>>> GetAuditionsreviewedAsync(string Id)
+        {
+            return HandleResult(await Mediator.Send(new AuditionReviewedDetails.Query { Id = Id }));
+        }
+        [HttpGet("auditionsnotreviewed")]
+        public async Task<ActionResult<List<AuditionDto>>> GetAuditionsNotReviewedAsync(string Id)
+        {
+            return HandleResult(await Mediator.Send(new AuditionNotReviewedDetails.Query { Id = Id }));
+        }
+        [HttpGet("photos")]
+        public async Task<ActionResult<List<AuditionDto>>> GetPhotosAsync(string Id)
+        {
+            return HandleResult(await Mediator.Send(new AuditionNotReviewedDetails.Query { Id = Id }));
         }
         [HttpPut("editactor")]
         public async Task<IActionResult> EditActorAsync(ActorProfileDto actor)
