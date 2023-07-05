@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
@@ -10,9 +11,10 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230705151947_adnaneumri")]
+    partial class adnaneumri
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.16");
@@ -202,47 +204,47 @@ namespace Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0fde8614-ed28-4158-98ec-d1d9996724be"),
+                            Id = new Guid("eccd26b4-8f11-4b28-93a4-fd7bbd0bcf92"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 9, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8053),
+                            EndDate = new DateTime(2023, 9, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3653),
                             Name = "Festival 1",
-                            StartDate = new DateTime(2023, 8, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8045),
+                            StartDate = new DateTime(2023, 8, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3645),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("35805774-dc48-42ba-983f-a476d3e3a6a3"),
+                            Id = new Guid("a51281ce-eb70-4498-bf36-00fb9a4af952"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 11, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8075),
+                            EndDate = new DateTime(2023, 11, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3661),
                             Name = "Festival 2",
-                            StartDate = new DateTime(2023, 10, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8074),
+                            StartDate = new DateTime(2023, 10, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3660),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("5d53db62-a7c5-4360-a3c1-8778f86bdc19"),
+                            Id = new Guid("ade3948e-96e3-4414-a45e-d59dcf00f5b8"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 1, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8078),
+                            EndDate = new DateTime(2024, 1, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3665),
                             Name = "Festival 3",
-                            StartDate = new DateTime(2023, 12, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8077),
+                            StartDate = new DateTime(2023, 12, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3664),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("244cb6ef-3b77-4c75-afb1-16509fe8a28b"),
+                            Id = new Guid("b9807413-7477-4d52-b06f-2f45c2ca9e18"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 3, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8081),
+                            EndDate = new DateTime(2024, 3, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3670),
                             Name = "Festival 4",
-                            StartDate = new DateTime(2024, 2, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8080),
+                            StartDate = new DateTime(2024, 2, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3669),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("72c80805-9ab3-4621-9303-fd9ecd41adcc"),
+                            Id = new Guid("07632a48-e741-47c0-9eb2-b3ca940e0b35"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 5, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8083),
+                            EndDate = new DateTime(2024, 5, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3674),
                             Name = "Festival 5",
-                            StartDate = new DateTime(2024, 4, 5, 16, 30, 44, 383, DateTimeKind.Utc).AddTicks(8082),
+                            StartDate = new DateTime(2024, 4, 5, 15, 19, 47, 354, DateTimeKind.Utc).AddTicks(3673),
                             ZipCode = 36300
                         });
                 });
@@ -252,18 +254,18 @@ namespace Persistance.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsMain")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Photos");
                 });
@@ -682,11 +684,9 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Photo", b =>
                 {
-                    b.HasOne("Domain.AppUser", "User")
+                    b.HasOne("Domain.AppUser", null)
                         .WithMany("Photos")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Domain.Schedule", b =>

@@ -38,9 +38,6 @@ namespace Persistance
                 a.HasOne(aa => aa.Actor)
                     .WithMany(a => a.Auditions)
                     .HasForeignKey(aa => aa.ActorId);
-                a.HasOne(aa => aa.Audition)
-                    .WithMany(a => a.Auditioners)
-                    .HasForeignKey(aa => aa.AuditionId);
                 a.HasOne(aa => aa.ShowRole)
                     .WithMany(sr => sr.ShowRoleAuditions)
                     .HasForeignKey(aa => aa.ShowRoleId);
@@ -173,6 +170,27 @@ namespace Persistance
                         },
                     }
                 );
+
+            builder.Entity<Show>()
+                .HasData(
+                new List<Show>
+                {
+
+                });
+
+           /* builder.Entity<ActorShowRole>()
+                .HasData(
+                new List<ActorShowRole>
+                {
+                    new ActorShowRole
+                    {
+                        ActorId = "3348fb4c-5632-4435-b2fa-2140a814c141",
+                        ShowId = 
+
+
+                    }
+                }
+                );*/ ; ;
         }
     }
 }
