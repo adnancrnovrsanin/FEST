@@ -51,7 +51,6 @@ namespace Application.Core
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
             CreateMap<ActorShowRole, ActorShowRoleDto>();
             CreateMap<AuditionReview, AuditionsReviewDto>();
-            CreateMap<ShowFestivalApplication, ShowFestivalApplicationDto>();
 
         }
     }
