@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -32,6 +33,17 @@ namespace Application.Core
                 .ForMember(d => d.AverageReview, o => o.MapFrom(s => s.Audition.Reviews.Count == 0 ? 0 : s.Audition.Reviews.Average(r => r.Review)));
             CreateMap<Audition, Audition>();
             CreateMap<Schedule, Schedule>();
+            CreateMap<ScheduleDto, ScheduleDto>();
+            CreateMap<Schedule, ScheduleDto>()
+                .ForMember(sd => sd.FestivalName, o => o.MapFrom(s => s.Festival.Name))
+                .ForMember(sd => sd.TheatreName, o => o.MapFrom(s => s.TheatreShow.Theatre.Name))
+                .ForMember(sd => sd.ShowName, o => o.MapFrom(s => s.TheatreShow.Show.Name))
+                .ForMember(sd => sd.FestivalId, o => o.MapFrom(s => s.Festival.Id))
+                .ForMember(sd => sd.TheatreId, o => o.MapFrom(s => s.TheatreShow.Theatre.Id))
+                .ForMember(sd => sd.ShowId, o => o.MapFrom(s => s.TheatreShow.Show.Id))
+                .ForMember(sd => sd.TimeOfPlay, o => o.MapFrom(s => s.TimeOfPlay.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)));
+            CreateMap<ScheduleDto, Schedule>()
+                .ForMember(s => s.TimeOfPlay, o => o.MapFrom(sd => DateTime.Parse(sd.TimeOfPlay, null, System.Globalization.DateTimeStyles.RoundtripKind)));
             CreateMap<Show, Show>();
             CreateMap<Theatre, Theatre>();
             CreateMap<Festival, FestivalDto>()
@@ -50,6 +62,15 @@ namespace Application.Core
             CreateMap<AppUser, ReviewerProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
             CreateMap<ActorShowRole, ActorShowRoleDto>();   
+            CreateMap<ShowFestivalApplication, ShowFestivalApplicationDto>()
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.Show.Name))
+                .ForMember(d => d.FestivalId, o => o.MapFrom(s => s.Festival.Id))
+                .ForMember(d => d.TheatreId, o => o.MapFrom(s => s.Theatre.Id))
+                .ForMember(d => d.SerialNumber, o => o.MapFrom(s => s.Show.SerialNumber))
+                .ForMember(d => d.DirectorName, o => o.MapFrom(s => s.Show.DirectorName))
+                .ForMember(d => d.StoryWriterName, o => o.MapFrom(s => s.Show.StoryWriterName))
+                .ForMember(d => d.LengthOfPlay, o => o.MapFrom(s => s.Show.LengthOfPlay))
+                .ForMember(d => d.AdditionalInformation, o => o.MapFrom(s => s.Show.AdditionalInformation));
 
         }
     }
