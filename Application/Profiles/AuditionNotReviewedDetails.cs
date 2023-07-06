@@ -14,11 +14,11 @@ namespace Application.Profiles
 {
     public class AuditionNotReviewedDetails
     {
-        public class Query : IRequest<Result<List<AuditionDto>>>
+        public class Query : IRequest<Result<List<ActorShowRoleAuditionDto>>>
         {
             public string Id { get; set; }
         }
-        public class Handler : IRequestHandler<Query, Result<List<AuditionDto>>>
+        public class Handler : IRequestHandler<Query, Result<List<ActorShowRoleAuditionDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -29,12 +29,12 @@ namespace Application.Profiles
                 _mapper = mapper;
             }
 
-            public async Task<Result<List<AuditionDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<ActorShowRoleAuditionDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var auditions = _context.Auditions.Include(asr => asr.ActorShowRole).Where(a => a.ActorShowRole.ActorId == request.Id).AsQueryable();
-                if (auditions == null) return Result<List<AuditionDto>>.Success(new List<AuditionDto>());
+                if (auditions == null) return Result<List<ActorShowRoleAuditionDto>>.Success(new List<ActorShowRoleAuditionDto>());
                 var notReviewedAuditions = await auditions.Where(a => a.Reviews.Count == 0).ToListAsync();
-                return Result<List<AuditionDto>>.Success(_mapper.Map<List<AuditionDto>>(notReviewedAuditions));
+                return Result<List<ActorShowRoleAuditionDto>>.Success(_mapper.Map<List<ActorShowRoleAuditionDto>>(notReviewedAuditions));
             }
         }
     }
