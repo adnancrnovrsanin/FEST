@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class ProfileController : BaseApiController
@@ -33,12 +34,12 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new ActingRolesDetails.Query { Id = Id }));
         }
         [HttpGet("auditionsreviewed")]
-        public async Task<ActionResult<List<AuditionDto>>> GetAuditionsreviewedAsync(string Id)
+        public async Task<ActionResult<List<ActorShowRoleAuditionDto>>> GetAuditionsreviewedAsync(string Id)
         {
             return HandleResult(await Mediator.Send(new AuditionReviewedDetails.Query { Id = Id }));
         }
         [HttpGet("auditionsnotreviewed")]
-        public async Task<ActionResult<List<AuditionDto>>> GetAuditionsNotReviewedAsync(string Id)
+        public async Task<ActionResult<List<ActorShowRoleAuditionDto>>> GetAuditionsNotReviewedAsync(string Id)
         {
             return HandleResult(await Mediator.Send(new AuditionNotReviewedDetails.Query { Id = Id }));
         }
