@@ -15,5 +15,6 @@ namespace Domain
         public ICollection<ShowFestivalApplicationReview> ShowApplications { get; set; }
         public ICollection<AuditionReview> AuditionReviews { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }
