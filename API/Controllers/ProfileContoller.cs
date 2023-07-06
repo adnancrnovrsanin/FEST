@@ -48,6 +48,16 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new AuditionNotReviewedDetails.Query { Id = Id }));
         }
+        [HttpGet("reviewerauditions")]
+        public async Task<ActionResult<List<AuditionsReviewDto>>> GetReviewAsync(string Id)
+        {
+            return HandleResult(await Mediator.Send(new AuditionReviewDetails.Query { Id = Id }));
+        }
+        [HttpGet("reviewerfestivals")]
+        public async Task<ActionResult<List<ShowFestivalApplicationReviewDto>>> GetFestivalAsync(string Id)
+        {
+            return HandleResult(await Mediator.Send(new ShowFestivalApplicationReviewDetails.Query { Id = Id }));
+        }
         [HttpPut("editactor")]
         public async Task<IActionResult> EditActorAsync(ActorProfileDto actor)
         {
