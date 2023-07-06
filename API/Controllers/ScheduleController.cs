@@ -31,5 +31,12 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new GetSchedulesByTheatreId.Query {TheatreId = id}));
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetAllSchedulesAsync()
+        {
+            return HandleResult(await Mediator.Send(new List.Query()));
+        }
     }
 }
