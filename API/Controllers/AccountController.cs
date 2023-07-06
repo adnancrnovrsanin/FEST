@@ -104,7 +104,8 @@ namespace API.Controllers
 
             if (user == null) return NotFound();
 
-            return Ok(_mapper.Map<UserDto>(user));
+            await SetRefreshToken(user);
+            return CreateUserObject(user);
         }
 
         [Authorize]
@@ -150,3 +151,4 @@ namespace API.Controllers
             };
         }
     }
+}
