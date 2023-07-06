@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Domain;
 using Domain.ModelDTOs;
+using System.Globalization;
 
 namespace Application.Core
 {
@@ -61,9 +57,15 @@ namespace Application.Core
                 .ForMember(d => d.AuditionsNotReviewed, o => o.MapFrom(s => s.Auditions.Where(a => a.Audition.Reviews.Count < 3)));
             CreateMap<AppUser, ReviewerProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
-            CreateMap<ActorShowRole, ActorShowRoleDto>();
+            CreateMap<ActorShowRole, ActorShowRoleDto>()
+                .ForMember(d => d.ShowRoleName, o => o.MapFrom(s => s.Role.Name))
+                .ForMember(d => d.Actor, o => o.MapFrom(s => s.Actor))
+                .ForMember(d => d.Pay, o => o.MapFrom(s => s.Pay));
             CreateMap<AuditionReview, AuditionsReviewDto>();
-            CreateMap<ActorShowRole, ActorShowRoleDto>();   
+            CreateMap<ActorShowRole, ActorShowRoleDto>()
+                .ForMember(d => d.ShowRoleName, o => o.MapFrom(s => s.Role.Name))
+                .ForMember(d => d.Actor, o => o.MapFrom(s => s.Actor))
+                .ForMember(d => d.Pay, o => o.MapFrom(s => s.Pay));
             CreateMap<ShowFestivalApplication, ShowFestivalApplicationDto>()
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Show.Name))
                 .ForMember(d => d.FestivalId, o => o.MapFrom(s => s.Festival.Id))
@@ -73,6 +75,20 @@ namespace Application.Core
                 .ForMember(d => d.StoryWriterName, o => o.MapFrom(s => s.Show.StoryWriterName))
                 .ForMember(d => d.LengthOfPlay, o => o.MapFrom(s => s.Show.LengthOfPlay))
                 .ForMember(d => d.AdditionalInformation, o => o.MapFrom(s => s.Show.AdditionalInformation));
+            CreateMap<Audition,AuditionDto>()
+                .ForMember(d => d.ActorId, o => o.MapFrom(s => s.ActorShowRole.ActorId));
+            CreateMap<ActorShowRoleAudition, ActorShowRoleAuditionDto>()
+                .ForMember(dest => dest.AuditionId, opt => opt.MapFrom(src => src.AuditionId))
+                .ForMember(dest => dest.ActorId, opt => opt.MapFrom(src => src.ActorId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Actor.Name))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.Actor.Surname))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Actor.Email))
+                .ForMember(dest => dest.VideoURL, opt => opt.MapFrom(src => src.Audition.VideoURL))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Audition.Description))
+                .ForMember(dest => dest.ShowRoleId, opt => opt.MapFrom(src => src.ShowRoleId))
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.ShowRole.Name))
+                .ForMember(dest => dest.ShowId, opt => opt.MapFrom(src => src.ShowRole.Id))
+                .ForMember(dest => dest.ShowName, opt => opt.MapFrom(src => src.ShowRole.Show.Name));
 
         }
     }
