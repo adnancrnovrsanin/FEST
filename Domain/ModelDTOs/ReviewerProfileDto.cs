@@ -13,8 +13,8 @@ namespace Domain.ModelDTOs
         public string Surname { get; set; }
         public string Email { get; set; }
         public Role Role { get; set; }
-        public ICollection<ShowFestivalApplicationReview> ShowApplications { get; set; }
-        public ICollection<AuditionReview> AuditionReviews { get; set; }
+        public ICollection<ShowFestivalApplicationReviewDto> ShowApplications { get; set; }
+        public ICollection<AuditionsReviewDto> AuditionReviews { get; set; }
         public Photo ProfilePicture { get; set; }
     }
 }
