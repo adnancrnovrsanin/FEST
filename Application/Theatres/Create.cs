@@ -8,6 +8,7 @@ using Domain;
 using Domain.ModelDTOs;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistance;
 
 namespace Application.Theatres
@@ -40,11 +41,16 @@ namespace Application.Theatres
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var manager = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Theatre.ManagerEmail);
+
+                if (manager == null) return Result<Unit>.Failure("Manager not found");
+
                 var theatre = new Theatre {
                     Name = request.Theatre.Name,
                     Address = request.Theatre.Address,
                     PhoneNumber = request.Theatre.PhoneNumber,
-                    YearOfCreation = request.Theatre.YearOfCreation
+                    YearOfCreation = request.Theatre.YearOfCreation,
+                    Manager = manager
                 };
 
                 _context.Theatres.Add(theatre);

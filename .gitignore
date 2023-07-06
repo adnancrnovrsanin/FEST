@@ -456,3 +456,7 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 API/appsettings.json
 .vscode/*
+API/.fuse_hidden0000d3f300000001
+Domain/bin/Debug/net6.0/Domain.deps.json
+Domain/bin/Debug/net6.0/Domain.deps.json
+Domain/bin/Debug/net6.0/Domain.dll

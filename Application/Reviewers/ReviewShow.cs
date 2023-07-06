@@ -46,7 +46,31 @@ namespace Application.Reviewers
 
                 if (showApplication.Reviews.Any(x => x.ReviewerId == reviewer.Id)) return Result<Unit>.Failure("You have already reviewed this show");
 
-                if (request.ShowFestivalApplicationReview.Acceptable == true && showApplication.Reviews.Count == 1) {
+                var review = showApplication.Reviews.FirstOrDefault(x => x.ReviewerId == reviewer.Id);
+
+                if (review == null)
+                {
+                    review = new ShowFestivalApplicationReview
+                    {
+                        Reviewer = reviewer,
+                        Application = showApplication,
+                        Acceptable = request.ShowFestivalApplicationReview.Acceptable
+                    };
+
+                    showApplication.Reviews.Add(review);
+                    _context.ShowFestivalApplicationReviews.Add(review);
+                }
+                else
+                {
+                    review.Acceptable = request.ShowFestivalApplicationReview.Acceptable;
+                    _context.ShowFestivalApplicationReviews.Update(review);
+                }
+
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if (!result) return Result<Unit>.Failure("Failed to review show");
+
+                if (showApplication.Reviews.Count(x => x.Acceptable == true) >= 2) {
                     var festival = await _context.Festivals.SingleOrDefaultAsync(x => x.Id == showApplication.FestivalId);
 
                     if (festival == null) return null;
@@ -91,31 +115,11 @@ namespace Application.Reviewers
                     if (!result2) return Result<Unit>.Failure("Failed to review show");
 
                     return Result<Unit>.Success(Unit.Value);
-                } 
-
-                var review = showApplication.Reviews.FirstOrDefault(x => x.ReviewerId == reviewer.Id);
-
-                if (review == null)
-                {
-                    review = new ShowFestivalApplicationReview
-                    {
-                        Reviewer = reviewer,
-                        Application = showApplication,
-                        Acceptable = request.ShowFestivalApplicationReview.Acceptable
-                    };
-
-                    showApplication.Reviews.Add(review);
-                    _context.ShowFestivalApplicationReviews.Add(review);
-                }
-                else
-                {
-                    review.Acceptable = request.ShowFestivalApplicationReview.Acceptable;
-                    _context.ShowFestivalApplicationReviews.Update(review);
                 }
 
-                var result = await _context.SaveChangesAsync() > 0;
+                var resultFinal = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to review show");
+                if (!resultFinal) return Result<Unit>.Failure("Failed to review show");
 
                 return Result<Unit>.Success(Unit.Value);
             }

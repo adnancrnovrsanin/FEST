@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Samir\\source\\repos\\FEST124\\Domain\\Domain.csproj": {}
+    "/media/actaer/Adnan Crnovršanin/Projects/FEST/FEST_Server/Domain/Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Samir\\source\\repos\\FEST124\\Domain\\Domain.csproj": {
+    "/media/actaer/Adnan Crnovršanin/Projects/FEST/FEST_Server/Domain/Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Samir\\source\\repos\\FEST124\\Domain\\Domain.csproj",
+        "projectUniqueName": "/media/actaer/Adnan Crnovršanin/Projects/FEST/FEST_Server/Domain/Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Samir\\source\\repos\\FEST124\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Samir\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Samir\\Source\\Repos\\FEST124\\Domain\\obj\\",
+        "projectPath": "/media/actaer/Adnan Crnovršanin/Projects/FEST/FEST_Server/Domain/Domain.csproj",
+        "packagesPath": "/home/actaer/.nuget/packages/",
+        "outputPath": "/media/actaer/Adnan Crnovršanin/Projects/FEST/FEST_Server/Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Samir\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/actaer/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -65,8 +63,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -75,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.119/RuntimeIdentifierGraph.json"
         }
       }
     }
