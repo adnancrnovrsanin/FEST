@@ -44,7 +44,6 @@ namespace Persistance
             });
 
             builder.Entity<ActorShowRole>(a => {
-                a.HasKey(asr => new {asr.ActorId, asr.RoleId, asr.ShowId});
                 a.HasOne(asr => asr.Actor)
                     .WithMany(a => a.ActingRoles)
                     .HasForeignKey(asr => asr.ActorId);

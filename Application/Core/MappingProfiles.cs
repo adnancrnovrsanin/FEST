@@ -37,7 +37,10 @@ namespace Application.Core
                 .ForMember(sd => sd.FestivalId, o => o.MapFrom(s => s.Festival.Id))
                 .ForMember(sd => sd.TheatreId, o => o.MapFrom(s => s.TheatreShow.Theatre.Id))
                 .ForMember(sd => sd.ShowId, o => o.MapFrom(s => s.TheatreShow.Show.Id))
-                .ForMember(sd => sd.TimeOfPlay, o => o.MapFrom(s => s.TimeOfPlay.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)));
+                .ForMember(sd => sd.TimeOfPlay, o => o.MapFrom(s => s.TimeOfPlay.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)))
+                .ForMember(sd => sd.ShowAdditionalInformation, o => o.MapFrom(s => s.TheatreShow.Show.AdditionalInformation))
+                .ForMember(sd => sd.NumberOfActors, o => o.MapFrom(s => s.TheatreShow.Theatre.Shows.FirstOrDefault(ts => ts.ShowId == s.TheatreShow.ShowId).NumberOfActors))
+                .ForMember(sd => sd.ManagerEmail, o => o.MapFrom(s => s.TheatreShow.Theatre.Manager.Email));
             CreateMap<ScheduleDto, Schedule>()
                 .ForMember(s => s.TimeOfPlay, o => o.MapFrom(sd => DateTime.Parse(sd.TimeOfPlay, null, System.Globalization.DateTimeStyles.RoundtripKind)));
             CreateMap<Show, Show>();
@@ -45,7 +48,8 @@ namespace Application.Core
             CreateMap<Festival, FestivalDto>()
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => s.StartDate.ToUniversalTime()))
                 .ForMember(d => d.EndDate, o => o.MapFrom(s => s.EndDate.ToUniversalTime()));
-            CreateMap<Theatre, TheatreDto>();
+            CreateMap<Theatre, TheatreDto>()
+                .ForMember(d => d.ManagerEmail, o => o.MapFrom(s => s.Manager.Email));
             CreateMap<TheatreDto, Theatre>();
             CreateMap<FestivalDto, Festival>()
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => DateTime.Parse(s.StartDate, null, System.Globalization.DateTimeStyles.RoundtripKind)))
@@ -61,13 +65,10 @@ namespace Application.Core
                 .ForMember(dest => dest.Auditions, opt => opt.MapFrom(src => src.AuditionsReviewed.Concat(src.AuditionsNotReviewed)));
             CreateMap<AppUser, ReviewerProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
-            CreateMap<ActorShowRole, ActorShowRoleDto>()
-                .ForMember(d => d.ShowRoleName, o => o.MapFrom(s => s.Role.Name))
-                .ForMember(d => d.Actor, o => o.MapFrom(s => s.Actor))
-                .ForMember(d => d.Pay, o => o.MapFrom(s => s.Pay));
             CreateMap<AuditionReview, AuditionsReviewDto>();
             CreateMap<ActorShowRole, ActorShowRoleDto>()
                 .ForMember(d => d.ShowRoleName, o => o.MapFrom(s => s.Role.Name))
+                .ForMember(d => d.ShowName, o => o.MapFrom(s => s.Show.Name))
                 .ForMember(d => d.Actor, o => o.MapFrom(s => s.Actor))
                 .ForMember(d => d.Pay, o => o.MapFrom(s => s.Pay));
             CreateMap<ShowFestivalApplication, ShowFestivalApplicationDto>()
@@ -92,6 +93,12 @@ namespace Application.Core
                 .ForMember(dest => dest.ShowRoleId, opt => opt.MapFrom(src => src.ShowRoleId))
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.ShowRole.Name))
                 .ForMember(dest => dest.ShowId, opt => opt.MapFrom(src => src.ShowRole.Id))
+                .ForMember(dest => dest.ShowName, opt => opt.MapFrom(src => src.ShowRole.Show.Name))
+                .ForMember(dest => dest.AverageReview, opt => opt.MapFrom(src => src.Audition.Reviews.Average(r => r.Review)));
+            CreateMap<ActorShowRoleAuditionDto, ActorShowRoleAudition>()
+                .ForMember(dest => dest.AuditionId, opt => opt.MapFrom(src => src.AuditionId))
+                .ForMember(dest => dest.ActorId, opt => opt.MapFrom(src => src.ActorId))
+                .ForMember(dest => dest.ShowRoleId, opt => opt.MapFrom(src => src.ShowRoleId))
                 .ForMember(dest => dest.ShowName, opt => opt.MapFrom(src => src.ShowRole.Show.Name));
             CreateMap<ShowFestivalApplicationReview,ShowFestivalApplicationReviewDto>()
                 .ForMember(dest => dest.ReviewerId, opt => opt.MapFrom(src => src.ReviewerId));

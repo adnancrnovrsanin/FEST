@@ -7,6 +7,7 @@ namespace Domain.ModelDTOs
 {
     public class AuditionDto
     {
+        public Guid Id { get; set; }
         public string ActorId { get; set; }
         public string VideoURL { get; set; }
         public string Description { get; set; }

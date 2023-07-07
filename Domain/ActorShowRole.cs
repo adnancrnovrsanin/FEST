@@ -2,6 +2,7 @@ namespace Domain
 {
     public class ActorShowRole
     {
+        public Guid Id { get; set; }
         public AppUser Actor { get; set; }
         public Show Show { get; set; }
         public ShowRole Role { get; set; }

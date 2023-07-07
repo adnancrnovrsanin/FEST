@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.ActorShowRoleAuditions;
 using Domain.ModelDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -18,6 +19,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateAudition(ActorShowRoleAuditionDto audition)
         {
