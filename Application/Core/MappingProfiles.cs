@@ -55,6 +55,10 @@ namespace Application.Core
                 .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos.Where(p => !p.IsMain)))
                 .ForMember(d => d.AuditionsReviewed, o => o.MapFrom(s => s.Auditions.Where(a => a.Audition.Reviews.Count > 2)))
                 .ForMember(d => d.AuditionsNotReviewed, o => o.MapFrom(s => s.Auditions.Where(a => a.Audition.Reviews.Count < 3)));
+            CreateMap<ActorProfileDto, AppUser>()
+                .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos.Where(p => !p.IsMain)))
+                .ForMember(d => d.Auditions, o => o.MapFrom(s => s.AuditionsNotReviewed))
+                .ForMember(dest => dest.Auditions, opt => opt.MapFrom(src => src.AuditionsReviewed.Concat(src.AuditionsNotReviewed)));
             CreateMap<AppUser, ReviewerProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
             CreateMap<ActorShowRole, ActorShowRoleDto>()
@@ -89,7 +93,9 @@ namespace Application.Core
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.ShowRole.Name))
                 .ForMember(dest => dest.ShowId, opt => opt.MapFrom(src => src.ShowRole.Id))
                 .ForMember(dest => dest.ShowName, opt => opt.MapFrom(src => src.ShowRole.Show.Name));
-
-        }
+            CreateMap<ShowFestivalApplicationReview,ShowFestivalApplicationReviewDto>()
+                .ForMember(dest => dest.ReviewerId, opt => opt.MapFrom(src => src.ReviewerId));
+            CreateMap<AppUser, TheatreManagerProfileDto>();
+        }   
     }
 }

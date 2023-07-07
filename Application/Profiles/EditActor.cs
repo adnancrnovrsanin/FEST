@@ -32,9 +32,10 @@ namespace Application.Profiles
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-               var profile = await _context.Users.Include(p => p.UserName).SingleOrDefaultAsync(x => x.Surname == request.Actor.Surname);
+               var profile = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.Actor.Id);
                 if (profile == null) return null;
-                _mapper.Map(request.Actor, profile);
+                if (request.Actor.Name != null) profile.Name = request.Actor.Name;
+                if (request.Actor.Surname != null) profile.Surname = request.Actor.Surname;
                 var result = await _context.SaveChangesAsync() > 0;
                 if (!result) return Result<Unit>.Failure("Failed to update profile");
                 return Result<Unit>.Success(Unit.Value);
