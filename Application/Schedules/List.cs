@@ -36,6 +36,7 @@ namespace Application.Schedules
                     .ThenInclude(f => f.Organizer)
                     .Include(s => s.TheatreShow)
                     .Include(s => s.TheatreShow.Theatre)
+                    .Include(s => s.TheatreShow.Theatre.Manager)
                     .Include(s => s.TheatreShow.Show)
                     .ProjectTo<ScheduleDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();

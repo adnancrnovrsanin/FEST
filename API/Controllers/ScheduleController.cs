@@ -33,10 +33,24 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("festival/{id}")]
+        public async Task<IActionResult> GetScheduleByFestivalIdAsync(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new GetSchedulesByFestivalId.Query { FestivalId = id }));
+        }
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllSchedulesAsync()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetScheduleByIdAsync(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new Details.Query {Id = id}));
         }
     }
 }

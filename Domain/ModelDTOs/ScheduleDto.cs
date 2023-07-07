@@ -16,5 +16,8 @@ namespace Domain.ModelDTOs
         public string TheatreName { get; set; }
         public Guid ShowId { get; set; }
         public string ShowName { get; set; }
+        public string ShowAdditionalInformation { get; set; }
+        public int NumberOfActors { get; set; }
+        public string ManagerEmail { get; set; }
     }
 }

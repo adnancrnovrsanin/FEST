@@ -31,9 +31,9 @@ namespace Application.ActorShowRoleAuditions
             {
                 var actor = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.Audition.ActorId);
 
-                var showRole = await _context.ShowRoles.SingleOrDefaultAsync(x => x.Id == request.Audition.ShowRoleId);
+                var actorShowRole = await _context.ActorShowRoles.SingleOrDefaultAsync(x => x.Id == request.Audition.ShowRoleId);
 
-                if (actor == null || showRole == null) return null;
+                if (actor == null || actorShowRole == null) return null;
 
                 var audition = new Audition {
                     VideoURL = request.Audition.VideoURL,
@@ -45,7 +45,10 @@ namespace Application.ActorShowRoleAuditions
                 var actorAudition = new ActorShowRoleAudition {
                     Actor = actor,
                     Audition = audition,
-                    ShowRole = showRole
+                    ShowRole = actorShowRole.Role,
+                    ActorId = actor.Id,
+                    AuditionId = audition.Id,
+                    ShowRoleId = actorShowRole.RoleId
                 };
 
                 _context.ActorShowRoleAuditions.Add(actorAudition);

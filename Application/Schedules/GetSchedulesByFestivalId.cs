@@ -12,11 +12,11 @@ using Persistance;
 
 namespace Application.Schedules
 {
-    public class GetSchedulesByTheatreId
+    public class GetSchedulesByFestivalId
     {
         public class Query : IRequest<Result<List<ScheduleDto>>>
         {
-            public Guid TheatreId { get; set; }
+            public Guid FestivalId { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<List<ScheduleDto>>>
@@ -39,7 +39,7 @@ namespace Application.Schedules
                     .Include(s => s.TheatreShow.Theatre)
                     .Include(s => s.TheatreShow.Theatre.Manager)
                     .Include(s => s.TheatreShow.Show)
-                    .Where(s => s.Festival.Organizer.Id == request.TheatreId && s.TimeOfPlay != null)
+                    .Where(s => s.Festival.Id == request.FestivalId)
                     .ProjectTo<ScheduleDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 

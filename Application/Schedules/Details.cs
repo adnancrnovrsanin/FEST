@@ -12,14 +12,14 @@ using Persistance;
 
 namespace Application.Schedules
 {
-    public class GetSchedulesByTheatreId
+    public class Details
     {
-        public class Query : IRequest<Result<List<ScheduleDto>>>
+        public class Query : IRequest<Result<ScheduleDto>>
         {
-            public Guid TheatreId { get; set; }
+            public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<ScheduleDto>>>
+        public class Handler : IRequestHandler<Query, Result<ScheduleDto>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -30,22 +30,21 @@ namespace Application.Schedules
                 _mapper = mapper;
             }
 
-            public async Task<Result<List<ScheduleDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<ScheduleDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var schedules = await _context.Schedules
+                var schedule = await _context.Schedules
                     .Include(s => s.Festival)
                     .ThenInclude(f => f.Organizer)
                     .Include(s => s.TheatreShow)
                     .Include(s => s.TheatreShow.Theatre)
                     .Include(s => s.TheatreShow.Theatre.Manager)
                     .Include(s => s.TheatreShow.Show)
-                    .Where(s => s.Festival.Organizer.Id == request.TheatreId && s.TimeOfPlay != null)
                     .ProjectTo<ScheduleDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync();
+                    .FirstOrDefaultAsync(s => s.Id == request.Id);
+                
+                if (schedule == null) return null;
 
-                if (schedules == null) return Result<List<ScheduleDto>>.Success(new List<ScheduleDto>());
-
-                return Result<List<ScheduleDto>>.Success(schedules);
+                return Result<ScheduleDto>.Success(schedule);
             }
         }
     }
