@@ -6,7 +6,7 @@ EXPOSE 8080
 COPY "FEST_Server.sln" "FEST_Server.sln"
 COPY "API/API.csproj" "API/API.csproj"
 COPY "Application/Application.csproj" "Application/Application.csproj"
-COPY "Persistence/Persistence.csproj" "Persistence/Persistence.csproj"
+COPY "Persistance/Persistance.csproj" "Persistance/Persistance.csproj"
 COPY "Domain/Domain.csproj" "Domain/Domain.csproj"
 COPY "Infrastructure/Infrastructure.csproj" "Infrastructure/Infrastructure.csproj"
 
