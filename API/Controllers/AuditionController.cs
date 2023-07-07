@@ -19,11 +19,22 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateAudition(ActorShowRoleAuditionDto audition)
         {
             return HandleResult(await Mediator.Send(new Create.Command {Audition = audition}));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAuditions()
+        {
+            return HandleResult(await Mediator.Send(new List.Query()));
+        }
+        
+        [HttpPost("review")]
+        public async Task<IActionResult> ReviewAudition(AuditionReviewDto audition)
+        {
+            return HandleResult(await Mediator.Send(new Review.Command {Audition = audition}));
         }
     }
 }

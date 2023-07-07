@@ -65,7 +65,7 @@ namespace Application.Core
                 .ForMember(dest => dest.Auditions, opt => opt.MapFrom(src => src.AuditionsReviewed.Concat(src.AuditionsNotReviewed)));
             CreateMap<AppUser, ReviewerProfileDto>()
                 .ForMember(d => d.ProfilePicture, o => o.MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain)));
-            CreateMap<AuditionReview, AuditionsReviewDto>();
+            CreateMap<AuditionReview, AuditionReviewDto>();
             CreateMap<ActorShowRole, ActorShowRoleDto>()
                 .ForMember(d => d.ShowRoleName, o => o.MapFrom(s => s.Role.Name))
                 .ForMember(d => d.ShowName, o => o.MapFrom(s => s.Show.Name))
@@ -94,12 +94,11 @@ namespace Application.Core
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.ShowRole.Name))
                 .ForMember(dest => dest.ShowId, opt => opt.MapFrom(src => src.ShowRole.Id))
                 .ForMember(dest => dest.ShowName, opt => opt.MapFrom(src => src.ShowRole.Show.Name))
-                .ForMember(dest => dest.AverageReview, opt => opt.MapFrom(src => src.Audition.Reviews.Average(r => r.Review)));
+                .ForMember(dest => dest.AverageReview, opt => opt.MapFrom(src => src.Audition.Reviews.Count > 0 ? src.Audition.Reviews.Average(r => r.Review) : 0));
             CreateMap<ActorShowRoleAuditionDto, ActorShowRoleAudition>()
                 .ForMember(dest => dest.AuditionId, opt => opt.MapFrom(src => src.AuditionId))
                 .ForMember(dest => dest.ActorId, opt => opt.MapFrom(src => src.ActorId))
-                .ForMember(dest => dest.ShowRoleId, opt => opt.MapFrom(src => src.ShowRoleId))
-                .ForMember(dest => dest.ShowName, opt => opt.MapFrom(src => src.ShowRole.Show.Name));
+                .ForMember(dest => dest.ShowRoleId, opt => opt.MapFrom(src => src.ShowRoleId));
             CreateMap<ShowFestivalApplicationReview,ShowFestivalApplicationReviewDto>()
                 .ForMember(dest => dest.ReviewerId, opt => opt.MapFrom(src => src.ReviewerId));
             CreateMap<AppUser, TheatreManagerProfileDto>();

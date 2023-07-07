@@ -15,11 +15,11 @@ namespace Application.Profiles
 {
     public class AuditionReviewDetails
     {
-            public class Query : IRequest<Result<List<AuditionsReviewDto>>>
+            public class Query : IRequest<Result<List<AuditionReviewDto>>>
             {
                 public string Id { get; set; }
             }
-            public class Handler : IRequestHandler<Query, Result<List<AuditionsReviewDto>>>
+            public class Handler : IRequestHandler<Query, Result<List<AuditionReviewDto>>>
             {
                 private readonly DataContext _context;
                 private readonly IMapper _mapper;
@@ -30,11 +30,11 @@ namespace Application.Profiles
                     _mapper = mapper;
                 }
 
-                public async Task<Result<List<AuditionsReviewDto>>> Handle(Query request, CancellationToken cancellationToken)
+                public async Task<Result<List<AuditionReviewDto>>> Handle(Query request, CancellationToken cancellationToken)
                 {
-                    var showRoles = await _context.AuditionReviews.Include(asr => asr.Reviewer).ProjectTo<AuditionsReviewDto>(_mapper.ConfigurationProvider).Where(asr => asr.ReviewerId == request.Id).ToListAsync();
-                    if (showRoles == null) return Result<List<AuditionsReviewDto>>.Success(new List<AuditionsReviewDto>());
-                    return Result<List<AuditionsReviewDto>>.Success(showRoles);
+                    var showRoles = await _context.AuditionReviews.Include(asr => asr.Reviewer).ProjectTo<AuditionReviewDto>(_mapper.ConfigurationProvider).Where(asr => asr.ReviewerId == request.Id).ToListAsync();
+                    if (showRoles == null) return Result<List<AuditionReviewDto>>.Success(new List<AuditionReviewDto>());
+                    return Result<List<AuditionReviewDto>>.Success(showRoles);
                 }
             }
         }

@@ -31,25 +31,34 @@ namespace Application.ActorShowRoleAuditions
             {
                 var actor = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.Audition.ActorId);
 
-                var actorShowRole = await _context.ActorShowRoles.SingleOrDefaultAsync(x => x.Id == request.Audition.ShowRoleId);
+                var actorShowRole = await _context.ActorShowRoles
+                    .Include(asr => asr.Role)
+                    .ThenInclude(r => r.ShowRoleAuditions)
+                    .SingleOrDefaultAsync(x => x.Id == request.Audition.ShowRoleId);
 
                 if (actor == null || actorShowRole == null) return null;
+
+                var alreadyExists = await _context.ActorShowRoleAuditions.AnyAsync(asra => asra.ActorId == request.Audition.ActorId && asra.ShowRole.Show.Id == request.Audition.ShowId);
+
+                if (alreadyExists) return Result<Unit>.Failure("Audition already exists");
 
                 var audition = new Audition {
                     VideoURL = request.Audition.VideoURL,
                     Description = request.Audition.Description,
                 };
 
-                _context.Auditions.Add(audition);
-
                 var actorAudition = new ActorShowRoleAudition {
                     Actor = actor,
                     Audition = audition,
                     ShowRole = actorShowRole.Role,
                     ActorId = actor.Id,
-                    AuditionId = audition.Id,
                     ShowRoleId = actorShowRole.RoleId
                 };
+
+                audition.ActorShowRole = actorAudition;
+                actorShowRole.Role.ShowRoleAuditions.Add(actorAudition);
+
+                _context.Auditions.Add(audition);
 
                 _context.ActorShowRoleAuditions.Add(actorAudition);
 

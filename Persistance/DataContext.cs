@@ -47,9 +47,6 @@ namespace Persistance
                 a.HasOne(asr => asr.Actor)
                     .WithMany(a => a.ActingRoles)
                     .HasForeignKey(asr => asr.ActorId);
-                a.HasOne(asr => asr.Role)
-                    .WithMany(sr => sr.RoleActors)
-                    .HasForeignKey(asr => asr.RoleId);
                 a.HasOne(asr => asr.Show)
                     .WithMany(s => s.Actors)
                     .HasForeignKey(asr => asr.ShowId);
@@ -123,6 +120,11 @@ namespace Persistance
                 .HasOne(a => a.ManagedTheatre)
                 .WithOne(t => t.Manager)
                 .HasForeignKey<Theatre>(t => t.ManagerId);
+            
+            builder.Entity<ShowRole>()
+                .HasMany(sr => sr.ShowRoleAuditions)
+                .WithOne(sra => sra.ShowRole)
+                .HasForeignKey(sra => sra.ShowRoleId);
 
             builder.Entity<Festival>()
                 .HasData(
@@ -169,27 +171,6 @@ namespace Persistance
                         },
                     }
                 );
-
-            builder.Entity<Show>()
-                .HasData(
-                new List<Show>
-                {
-
-                });
-
-           /* builder.Entity<ActorShowRole>()
-                .HasData(
-                new List<ActorShowRole>
-                {
-                    new ActorShowRole
-                    {
-                        ActorId = "3348fb4c-5632-4435-b2fa-2140a814c141",
-                        ShowId = 
-
-
-                    }
-                }
-                );*/ ; ;
         }
     }
 }

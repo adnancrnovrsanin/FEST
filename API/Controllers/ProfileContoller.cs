@@ -49,7 +49,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new AuditionNotReviewedDetails.Query { Id = Id }));
         }
         [HttpGet("reviewerauditions")]
-        public async Task<ActionResult<List<AuditionsReviewDto>>> GetReviewAsync(string Id)
+        public async Task<ActionResult<List<AuditionReviewDto>>> GetReviewAsync(string Id)
         {
             return HandleResult(await Mediator.Send(new AuditionReviewDetails.Query { Id = Id }));
         }

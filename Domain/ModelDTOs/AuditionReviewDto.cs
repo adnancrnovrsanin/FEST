@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.ModelDTOs
 {
-    public class AuditionsReviewDto
+    public class AuditionReviewDto
     {
         public string ReviewerId { get; set; }
         public Guid AuditionId { get; set; }
