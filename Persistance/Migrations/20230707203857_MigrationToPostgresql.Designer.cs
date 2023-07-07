@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistance;
 
 #nullable disable
@@ -11,31 +12,42 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230703120054_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230707203857_MigrationToPostgresql")]
+    partial class MigrationToPostgresql
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.16");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Domain.ActorShowRole", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ActorId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ShowId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<double>("Pay")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
-                    b.HasKey("ActorId", "RoleId", "ShowId");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("RoleId");
+                    b.Property<Guid>("ShowId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActorId");
+
+                    b.HasIndex("RoleId")
+                        .IsUnique();
 
                     b.HasIndex("ShowId");
 
@@ -45,17 +57,18 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.ActorShowRoleAudition", b =>
                 {
                     b.Property<string>("ActorId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("AuditionId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ShowRoleId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("ActorId", "AuditionId", "ShowRoleId");
 
-                    b.HasIndex("AuditionId");
+                    b.HasIndex("AuditionId")
+                        .IsUnique();
 
                     b.HasIndex("ShowRoleId");
 
@@ -65,63 +78,63 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Role")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -139,13 +152,13 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("VideoURL")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -155,13 +168,13 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.AuditionReview", b =>
                 {
                     b.Property<Guid>("AuditionId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ReviewerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<double>("Review")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasKey("AuditionId", "ReviewerId");
 
@@ -174,25 +187,25 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("City")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("OrganizerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("ZipCode")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -203,47 +216,47 @@ namespace Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1cfa698f-516f-451b-80d7-c4a70e7b05ad"),
+                            Id = new Guid("a553b5f9-220c-4f45-91e5-9419f7baf575"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 9, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5510),
+                            EndDate = new DateTime(2023, 9, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4166),
                             Name = "Festival 1",
-                            StartDate = new DateTime(2023, 8, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5491),
+                            StartDate = new DateTime(2023, 8, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4160),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("0420255b-52a9-442c-81ed-b2626685b561"),
+                            Id = new Guid("296074d9-28f6-4beb-bb23-9490e1e0ab6c"),
                             City = "Beograd",
-                            EndDate = new DateTime(2023, 11, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5554),
+                            EndDate = new DateTime(2023, 11, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4175),
                             Name = "Festival 2",
-                            StartDate = new DateTime(2023, 10, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5539),
+                            StartDate = new DateTime(2023, 10, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4174),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("52ea9009-7d82-4f17-98f4-98d6e505a4c3"),
+                            Id = new Guid("629bd6d5-be2b-4348-bdbf-34d3af7f8de7"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 1, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5592),
+                            EndDate = new DateTime(2024, 1, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4181),
                             Name = "Festival 3",
-                            StartDate = new DateTime(2023, 12, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5577),
+                            StartDate = new DateTime(2023, 12, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4181),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("a3d23763-d578-4d41-addd-b5dd984ec5e6"),
+                            Id = new Guid("926a6755-ce4b-40a6-a2b3-5d667db816aa"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 3, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5631),
+                            EndDate = new DateTime(2024, 3, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4188),
                             Name = "Festival 4",
-                            StartDate = new DateTime(2024, 2, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5621),
+                            StartDate = new DateTime(2024, 2, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4188),
                             ZipCode = 36300
                         },
                         new
                         {
-                            Id = new Guid("88cd79ac-60e9-4c11-ac24-318b75c19748"),
+                            Id = new Guid("4506a2e2-17d2-46e2-96ea-3f6ff42831b2"),
                             City = "Beograd",
-                            EndDate = new DateTime(2024, 5, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5746),
+                            EndDate = new DateTime(2024, 5, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4196),
                             Name = "Festival 5",
-                            StartDate = new DateTime(2024, 4, 3, 12, 0, 54, 145, DateTimeKind.Utc).AddTicks(5731),
+                            StartDate = new DateTime(2024, 4, 7, 20, 38, 57, 752, DateTimeKind.Utc).AddTicks(4194),
                             ZipCode = 36300
                         });
                 });
@@ -251,41 +264,68 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.Photo", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsMain")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Url")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("Domain.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("Domain.Schedule", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("FestivalId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("LengthOfPlay")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("TheatreShowScheduleId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("TimeOfPlay")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -300,25 +340,25 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AdditionalInformation")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("DirectorName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("LengthOfPlay")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("SerialNumber")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("StoryWriterName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -329,19 +369,19 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("FestivalId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("NumberOfActors")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("ShowId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("TheatreId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -358,26 +398,21 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("Acceptable")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid?>("FestivalId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ReviewerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ShowFestivalApplicationId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("ShowId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FestivalId");
 
                     b.HasIndex("ReviewerId");
 
@@ -392,13 +427,13 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("ShowId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -411,22 +446,22 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ManagerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("YearOfCreation")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -439,13 +474,13 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.TheatreShow", b =>
                 {
                     b.Property<Guid>("TheatreId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ShowId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("NumberOfActors")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("TheatreId", "ShowId");
 
@@ -458,13 +493,13 @@ namespace Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ShowId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("TheatreId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -478,19 +513,19 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -505,17 +540,19 @@ namespace Persistance.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -528,17 +565,19 @@ namespace Persistance.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -550,17 +589,17 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -572,10 +611,10 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -587,16 +626,16 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -607,13 +646,11 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.AppUser", "Actor")
                         .WithMany("ActingRoles")
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ActorId");
 
                     b.HasOne("Domain.ShowRole", "Role")
-                        .WithMany("RoleActors")
-                        .HasForeignKey("RoleId")
+                        .WithOne("PickedActor")
+                        .HasForeignKey("Domain.ActorShowRole", "RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -639,8 +676,8 @@ namespace Persistance.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Audition", "Audition")
-                        .WithMany("Auditioners")
-                        .HasForeignKey("AuditionId")
+                        .WithOne("ActorShowRole")
+                        .HasForeignKey("Domain.ActorShowRoleAudition", "AuditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -688,9 +725,20 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Photo", b =>
                 {
-                    b.HasOne("Domain.AppUser", null)
+                    b.HasOne("Domain.AppUser", "User")
                         .WithMany("Photos")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.RefreshToken", b =>
+                {
+                    b.HasOne("Domain.AppUser", "AppUser")
+                        .WithMany("RefreshTokens")
                         .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Domain.Schedule", b =>
@@ -715,7 +763,7 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.ShowFestivalApplication", b =>
                 {
                     b.HasOne("Domain.Festival", "Festival")
-                        .WithMany()
+                        .WithMany("ShowApplications")
                         .HasForeignKey("FestivalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -741,10 +789,6 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.ShowFestivalApplicationReview", b =>
                 {
-                    b.HasOne("Domain.Festival", null)
-                        .WithMany("ShowApplications")
-                        .HasForeignKey("FestivalId");
-
                     b.HasOne("Domain.AppUser", "Reviewer")
                         .WithMany("ShowApplications")
                         .HasForeignKey("ReviewerId");
@@ -883,12 +927,14 @@ namespace Persistance.Migrations
 
                     b.Navigation("Photos");
 
+                    b.Navigation("RefreshTokens");
+
                     b.Navigation("ShowApplications");
                 });
 
             modelBuilder.Entity("Domain.Audition", b =>
                 {
-                    b.Navigation("Auditioners");
+                    b.Navigation("ActorShowRole");
 
                     b.Navigation("Reviews");
                 });
@@ -920,7 +966,7 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.ShowRole", b =>
                 {
-                    b.Navigation("RoleActors");
+                    b.Navigation("PickedActor");
 
                     b.Navigation("ShowRoleAuditions");
                 });

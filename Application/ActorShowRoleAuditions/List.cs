@@ -12,13 +12,11 @@ using Persistance;
 
 namespace Application.ActorShowRoleAuditions
 {
-    public class Details
+    public class List
     {
-        public class Query : IRequest<Result<ActorShowRoleAuditionDto>> {
-            public Guid Id { get; set; }
-        }
+        public class Query : IRequest<Result<List<ActorShowRoleAuditionDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<ActorShowRoleAuditionDto>>
+        public class Handler : IRequestHandler<Query, Result<List<ActorShowRoleAuditionDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -29,7 +27,7 @@ namespace Application.ActorShowRoleAuditions
                 _mapper = mapper;
             }
 
-            public async Task<Result<ActorShowRoleAuditionDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<ActorShowRoleAuditionDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var audition = await _context.ActorShowRoleAuditions
                     .Include(a => a.Actor)
@@ -38,11 +36,11 @@ namespace Application.ActorShowRoleAuditions
                     .Include(a => a.ShowRole)
                     .ThenInclude(a => a.Show)
                     .ProjectTo<ActorShowRoleAuditionDto>(_mapper.ConfigurationProvider)
-                    .SingleOrDefaultAsync(a => a.AuditionId == request.Id);
+                    .ToListAsync();
 
-                if (audition == null) return null;
+                if (audition == null) return Result<List<ActorShowRoleAuditionDto>>.Success(new List<ActorShowRoleAuditionDto>());
 
-                return Result<ActorShowRoleAuditionDto>.Success(audition);
+                return Result<List<ActorShowRoleAuditionDto>>.Success(audition);
             }
         }
     }
