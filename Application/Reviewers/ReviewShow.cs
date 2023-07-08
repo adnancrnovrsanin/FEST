@@ -32,7 +32,7 @@ namespace Application.Reviewers
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var reviewer = await _context.Users.SingleOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
+                var reviewer = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.ShowFestivalApplicationReview.ReviewerId);
 
                 if (reviewer == null) return null;
 
@@ -66,9 +66,7 @@ namespace Application.Reviewers
                     _context.ShowFestivalApplicationReviews.Update(review);
                 }
 
-                var result = await _context.SaveChangesAsync() > 0;
-
-                if (!result) return Result<Unit>.Failure("Failed to review show");
+                await _context.SaveChangesAsync();
 
                 if (showApplication.Reviews.Count(x => x.Acceptable == true) >= 2) {
                     var festival = await _context.Festivals.SingleOrDefaultAsync(x => x.Id == showApplication.FestivalId);
@@ -86,12 +84,16 @@ namespace Application.Reviewers
                     var theatreShow = new TheatreShow {
                         Theatre = theatre,
                         Show = show,
+                        TheatreId = theatre.Id,
+                        ShowId = show.Id,
                         NumberOfActors = showApplication.NumberOfActors
                     };
 
                     var theatreShowSchedule = new TheatreShowSchedule {
                         Theatre = theatre,
                         Show = show,
+                        ShowId = show.Id,
+                        TheatreId = theatre.Id,
                         Schedules = new List<Domain.Schedule>()
                     };
 
@@ -99,6 +101,8 @@ namespace Application.Reviewers
                         LengthOfPlay = show.LengthOfPlay,
                         TimeOfPlay = null,
                         Festival = festival,
+                        FestivalId = festival.Id,
+                        TheatreShowScheduleId = theatreShowSchedule.Id,
                         TheatreShow = theatreShowSchedule
                     };
 
@@ -110,9 +114,9 @@ namespace Application.Reviewers
                     _context.ShowFestivalApplicationReviews.RemoveRange(showApplication.Reviews);
                     _context.ShowFestivalApplications.Remove(showApplication);
 
-                    var result2 = await _context.SaveChangesAsync() > 0;
+                    var result = await _context.SaveChangesAsync() > 0;
 
-                    if (!result2) return Result<Unit>.Failure("Failed to review show");
+                    if (!result) return Result<Unit>.Failure("Failed to review show");
 
                     return Result<Unit>.Success(Unit.Value);
                 }

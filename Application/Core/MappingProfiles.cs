@@ -99,8 +99,7 @@ namespace Application.Core
                 .ForMember(dest => dest.AuditionId, opt => opt.MapFrom(src => src.AuditionId))
                 .ForMember(dest => dest.ActorId, opt => opt.MapFrom(src => src.ActorId))
                 .ForMember(dest => dest.ShowRoleId, opt => opt.MapFrom(src => src.ShowRoleId));
-            CreateMap<ShowFestivalApplicationReview,ShowFestivalApplicationReviewDto>()
-                .ForMember(dest => dest.ReviewerId, opt => opt.MapFrom(src => src.ReviewerId));
+            CreateMap<ShowFestivalApplicationReview,ShowFestivalApplicationReviewDto>();
             CreateMap<AppUser, TheatreManagerProfileDto>();
         }   
     }
